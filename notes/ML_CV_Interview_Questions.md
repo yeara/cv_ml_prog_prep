@@ -1,12 +1,8 @@
 # ML & CV Interview Questions
 
+## Other Resources
 
-Semantic vision - concepts of boosting, neural nets, svm, random forests, image descriptors etc
-
-
-
-
-How to generate 
+https://github.com/andrewekhalel/MLQuestions
 
 # Review Questions
 
@@ -97,6 +93,7 @@ What's max pooling? Soft vs hard max pooling?
 4. "Talk to us about rotation."
 5. [Project Euler #14.](https://projecteuler.net/problem=14)
 6. Reverse a linked list in place.
+7. What's a convolution?
 
 
 
