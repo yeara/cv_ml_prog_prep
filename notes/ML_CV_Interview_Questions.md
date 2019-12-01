@@ -42,6 +42,10 @@ Explain the tradeoffs between overfitting and regularization, L1 and L2 loss
 
 How does bias affect the model?
 
+Implement simple models such as decision trees and K-means clustering.
+
+ If you put some models on your resume, make sure you understand it thoroughly and can comment on its pros and cons.
+
 ### Image Processing
 
 How do you efficiently compute integral images?
