@@ -1,7 +1,16 @@
 \refstepcounter{chapter}
 \chapter{Image Processing}
 
+
+
+Computational Photography
+
+Bayer Pattern
+
+Camera noise models
+
 \subsection{Integral Images}
+
 
 The value at any point (*x*, *y*) in the summed-area table is the sum of all the pixels above and to the left of (*x*, *y*), inclusive where $i(x,y)$  is the value of the pixel at (x,y). The summed-area table can be computed efficiently in a single pass over the image:
 
@@ -76,9 +85,17 @@ Can be removed using median or morphological filtering.
 
 Visual Odometry
 
-\subsubsection{Sillouhette Segmentation / Visual Hull}
+\subsubsection{Silhouette Segmentation / Visual Hull}
 
 \section{Optic Flow}
+
+
+\section{Image Segmentation / Pixel Labeling}
+
+\section{Object Detection}
+
+\section{Classification Problems}
+
 
 \section{Event Cameras}
 
@@ -147,4 +164,5 @@ Network processes last $N$ events (10,000)
 
 Trained in simulation only (without seeing a single real image) (we used our event camera simulator: http://rpg.ifi.uzh.ch/esim.html) 
 
-Noise free simulation. We randomized the contrast sensituvity
+Noise free simulation. We randomized the contrast sensitivity
+

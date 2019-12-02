@@ -1,22 +1,21 @@
-% \documentclass[12pt,a4paper,BCOR18mm,DIV14,headings=big,chapterprefix=false,version=first,twoside,headinclude]{scrbook}
-\documentclass[10pt,a4paper,BCOR10mm,DIV14,headings=big,chapterprefix=false,version=first,twoside,headinclude]{book}
+\documentclass[10pt,landscape,twocolumn]{article}
 
-\usepackage{ccicons} 
+\usepackage[cm]{fullpage}
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman,english]{babel}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage[pdftex]{graphicx}
-\usepackage{appendix}
-\usepackage{color}
-\usepackage{colortbl} % for colored hlines in chapter pagestyle
+% \usepackage{appendix}
+% \usepackage{color}
+% \usepackage{colortbl} % for colored hlines in chapter pagestyle
 \usepackage{url}
-\usepackage{scrpage2}
-\usepackage{booktabs} % publication quality tables for LaTeX
+% \usepackage{scrpage2}
+% \usepackage{booktabs} % publication quality tables for LaTeX
 \usepackage{algorithm}
-\usepackage{scrhack} % removes warning from KOMA
-\usepackage{helvet} % sets sans-serif font
-\usepackage{algpseudocode}
-\usepackage{csquotes}
+% \usepackage{scrhack} % removes warning from KOMA
+% \usepackage{helvet} % sets sans-serif font
+% \usepackage{algpseudocode}
+% \usepackage{csquotes}
 \usepackage{pdfpages}
 
 % pdf hyperlinks
@@ -39,46 +38,17 @@
 		pdfpagelabels=true]{hyperref}
 
 
-% fix ugly list indentation
-\usepackage{enumitem}
-% \setlist[enumerate]{labelindent=\labelmargin, leftmargin=*}
-% \setlist[itemize]{labelindent=\labelmargin, leftmargin=*}
 
 \DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
-% package caption
-%\usepackage[nooneline,small,bf,ruled]{caption} 
-%\renewcommand{\captionfont}{\itshape}
-%\renewcommand{\captionlabelfont}{\sffamily\upshape\bfseries}
 
-\usepackage[singlelinecheck=on,textfont={small,it},labelfont={small,bf},format=plain,indention=15pt]{caption} 
-\usepackage[justification=centering]{subcaption}
-\captionsetup[table]{aboveskip=6pt}
-\renewcommand{\arraystretch}{1.3}
+\usepackage{caption} 
 
-% font
 \usepackage[slantedGreek]{mathpazo}
 
-% bibliography style
 \usepackage{named}
 \bibliographystyle{named}
 
-% \KOMAoptions{headinclude}
-
-% \pagestyle{scrheadings}
-% \parskip 0.1in plus 0.05in
-% % \parindent 0in
-% \renewcommand{\floatpagefraction}{0.75} % default: 0.5
-% \linespread{1.05}  % for palatino; DO NOT change \baselinestretch!
-
-% \tolerance 1414
-% \hbadness 1414
-% \emergencystretch 1.5em
-% \hfuzz 0.3pt
-% % \widowpenalty=10000
-% \widowpenalties=3 10000 10000 150
-% \clubpenalties=3 10000 10000 150
-% \vfuzz \hfuzz
-% \raggedbottom
+\setlength\parindent{0pt}
 
 \input{macros}
 
@@ -88,21 +58,16 @@
 
 \selectlanguage{english}
 
-\title{Computer Vision & Machine Learning}
+\title{Computer Vision \& Machine Learning Revision Notes}
 \author{Yeara Kozlov}
+\date{}
 
-\frontmatter
-% \include{title}
-
-
-% \chapter*{Abstract}
-% \addcontentsline{toc}{chapter}{Abstract}
-% \input{abstract}
+\maketitle
 
 \selectlanguage{english}
 
-\phantomsection
-\addcontentsline{toc}{chapter}{Contents}
+% \phantomsection
+% \addcontentsline{toc}{chapter}{Contents}
 \tableofcontents
 \clearemptydoublepage
 
@@ -126,94 +91,12 @@
 
 % \cleardoublepage
 
-\pagenumbering{roman}
+% \pagenumbering{roman}
 \setcounter{page}{1}
 
-% \renewcommand*{\chapterheadstartvskip}{\vspace*{190pt}} % Adjusting the spacing of the chapter title number
-
-% \def\mychpstyleintl#1{%
-% {\noindent\setlength{\tabcolsep}{0pt}\setlength{\arrayrulewidth}{2pt}%
-% \begin{tabular}{c}
-% \\[100pt]
-% \begin{tabular}{lr}
-% \begin{tabular}{p{0.6\linewidth}}
-% \arrayrulecolor{ChapterColor}\hline
-% \\
-% \bfseries
-% \normalfont
-% \fontsize{30}{36} %choose baselineskip to be 1.2 times font size (NOTE: PALATONE REQUIRES FACTOR OF 1.24!)
-% \selectfont
-% #1\\[38pt]
-% \end{tabular}
-% &
-% \begin{tabular}{p{0.4\linewidth}}
-% \rightline{\textcolor{ChapterColor}{%
-% \fontsize{100}{120} %choose baselineskip to be 1.2 times font size
-% \selectfont
-% \thechapter}}
-% \end{tabular}
-% \end{tabular}\\[300pt]
-% \end{tabular}
-% }}
-
-% \newpagestyle{mychapterpagestyle}{{\protect\mychpstyleintl{C\hfill H\hfill A\hfill P\hfill T\hfill E\hfill R}}{\protect\mychpstyleintl{C\hfill H\hfill A\hfill P\hfill T\hfill E\hfill R}}}{}
-
-% \newpagestyle{myappendixpagestyle}{{\protect\mychpstyleintl{A\hfill P\hfill P\hfill E\hfill N\hfill D\hfill I\hfill X}}{\protect\mychpstyleintl{A\hfill P\hfill P\hfill E\hfill N\hfill D\hfill I\hfill X}}}{}
-
-% indent all body elements and make hanging section numbers
-
-% % amount of indent
-% \newcommand{\sectionmargin}{%
-%   10mm}
-% \newcommand{\labelmargin}{%
-%   20mm}
-
-% command to indent block
-% \newcommand{\hang}{%
-%   \addtolength{\leftskip}{\sectionmargin}
-% } 
-
-%%% VV: I think it's really ugly when the section titles and tables/figures are
-% hanging, but the rest of the text is all indented.
-% I refuse having that formatting. Let's just stick to the good old fashion
-% indentation style.
-% Therefore, I removed this line:
-%\hang
-% Also, I removed the \parindent=0 from above
-% Also, I restored the enumeration handling indentation
-
-
-% increase font sizes for sections and chapters
-% \addtokomafont{chapter}{%
-%  \fontfamily{phv}
-%  \upshape
-%  \fontsize{22}{22}
-%   \selectfont}
-% \addtokomafont{section}{%
-%  \fontfamily{phv}
-%  \upshape
-%  \fontsize{14}{14}
-%   \selectfont}
-% \addtokomafont{subsection}{%
-%  \fontfamily{phv}
-%  \upshape
-%  \fontsize{13}{13}
-%   \selectfont}
-% \addtokomafont{subsubsection}{%
-%  \fontfamily{phv}
-%  \upshape
-%  \fontsize{12}{12}
-%   \selectfont}
-
-\clearemptydoublepage
-\pagenumbering{arabic}
-
-\cleardoublepage
-% \renewcommand*{\chapterpagestyle}{mychapterpagestyle}
-
-\setcounter{chapter}{0}
-\include{front_matter}
-% \include{cv}
+% \setcounter{chapter}{0}
+% \include{front_matter}
+\include{cv}
 % \include{ml}
 % \include{image_proc}
 % \include{geometry}
@@ -222,8 +105,8 @@
 
 % \renewcommand*{\chapterpagestyle}{myappendixpagestyle}
 
-\setcounter{chapter}{0}
-\setcounter{figure}{0}
+% \setcounter{chapter}{0}
+% \setcounter{figure}{0}
 
 % add your appendix chapters here
 
