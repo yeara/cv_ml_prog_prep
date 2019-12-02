@@ -1,0 +1,49 @@
+%!TEX root = thesis.tex
+\definecolor{ChapterColor}{cmyk}{0.9827,0.8405,0.0333,0.005}
+\definecolor{TitleColor}{cmyk}{0.9827,0.8405,0.0333,0.005}
+
+% Terminates current page and paragraph, makes sure next page starts on
+% an odd-number, and generates a completely blank page, without page markers,
+% if necessary.
+\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+
+
+\newcommand{\Ds}{\mathbf{D_s}} 
+\newcommand{\F}{\mathbf{F}} 
+\newcommand{\X}{\mathbf{X}} 
+\newcommand{\x}{\mathbf{x}} 
+\newcommand{\Dm}{\mathbf{D_s}}
+
+
+\newcommand{\comment}[1]{}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\eqnref}[1]{Eq.~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\chapref}[1]{Chapter~\ref{#1}}
+\newcommand{\appref}[1]{Appendix~\ref{#1}}
+\newcommand{\stepref}[1]{Step~\ref{#1}}
+\newcommand{\algoref}[1]{Algorithm~\ref{#1}} %conflicts with algo package
+
+
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\median}{median}
+\DeclareMathOperator*{\Tr}{tr}
+
+\definecolor{yearacolor}{RGB}{255,0,0}
+\newcommand\yk[1] {\emph{\textcolor{yearacolor}{YK: #1}}}
+\newcommand\yeara[1] {\emph{\textcolor{yearacolor}{YK: #1}}}
+
+\newcommand\todo[1] {\emph{\textcolor{red}{#1}}}
+
+\newcommand{\figtext}[1]{{\footnotesize #1}}
+
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\ba}{\mathbf{a}}
+% \newcommand{\bf}{\mathbf{f}}
+\newcommand{\bX}{\mathbf{X}}
+\newcommand{\bE}{\mathbf{E}}
+\newcommand{\bLF}{\mathbf{F}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bM}{\mathbf{M}}
