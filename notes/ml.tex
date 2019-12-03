@@ -1,4 +1,4 @@
-%!TEX root = computer_vision_notes.tex
+%!TEX root = cv_ml_notes.tex
 % \refstepcounter{chapter}
 \section{Machine Learning}
 
@@ -94,7 +94,7 @@ Gradient verification with FD
 
 If $\alpha$ is small enough, GD should decrease for every iteration
 
-\includegraphics{ml_figures/convergence.png}
+\includegraphics[width=0.9\columnwidth]{ml_figures/convergence.png}
 
 A - good convergence
 
@@ -201,8 +201,7 @@ Normal Equation
 \section{Classification}
 
 \subsection{Two Class Problems}
-
-\includegraphics{ml_figures/log_threshold.png}
+\includegraphics[width=0.9\columnwidth]{ml_figures/log_threshold.png}
 
 Using linear regression model + threshold:
 
@@ -220,7 +219,7 @@ Logistic/sigmoid function: $g(z) = \frac{1}{1+e^{-z}}$
 
 Together: $h_\theta(x)=\frac{1}{1+e^{-\theta^T x}}$
 
-\includegraphics{ml_figures/sigmoid.png}
+\includegraphics[width=0.9\columnwidth]{ml_figures/sigmoid.png}
 
 Has  asymptotes at {0,1}
 
@@ -266,7 +265,7 @@ $(h(x)=0, y = 0)$ or$(h(x) = 1, y = 1)$  - cost = 0
 
 Very high penalization if $(h(x)=1, y = 0)$ or$(h(x) = 0, y = 1)$ due to the cost function going asymptotically to $\infty$ :
 
-\includegraphics{ml_figures/cost_function.png}
+\includegraphics[width=0.8\columnwidth]{ml_figures/cost_function.png}
 
 \subsubsection{Simplified Cost Function}
 
@@ -365,7 +364,7 @@ For new input choose $\max_ih_\theta^i(x)$
 
 \section{ Overfitting vs. Bias}
 
-\includegraphics{ml_figures/overfitting.png}
+\includegraphics[width=0.5\columnwidth]{ml_figures/overfitting.png}
 Underfitting -> high bias.
 
 Overfitting, high variance

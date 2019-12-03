@@ -1,9 +1,11 @@
-%!TEX root = computer_vision_notes.tex
+%!TEX root = cv_ml_notes.tex
 % \refstepcounter{chapter}
 \section{Computer Vision}
 
 Questions: How do you translate cameras?
+
 graphcut
+
 dynamic programming for stereo matching
 
 
@@ -260,9 +262,9 @@ Feature Points - distinct points in image (i.e. corners)
 Stable image features should maximize the uniquness of the region, which is measured by auto-correlation.
 
 $$ 
-\mathbf{A} =  \begin{matrix} I_x^2 &  I_xI_y \\
+\mathbf{A} = \left(  \begin{matrix} I_x^2 &  I_xI_y \\
 I_xI_y & I_y^2
-\end{matrix} $$
+\end{matrix} \right) $$
 
 \begin{itemize}
 \item Cornerness depends on the eigenvalues $\lambda_1,\lambda_2$ of the auto-correlation matrix.
@@ -328,7 +330,7 @@ Hard binning results in discontinous descriptors with small changes.
 
 Soft binning - gradual changes to descriptor.
 
-\includegraphics[width=0.4\columnwidth]{cv_figures/lowe.png}
+\includegraphics[width=0.9\columnwidth]{cv_figures/lowe.png}
 
 \section{Feature Matching}
 
@@ -477,7 +479,7 @@ $\mathbf{E}=\mathbf{RS}$
 
 where 
 
-$\mathbf{S} = \left| \begin{matrix} 0 & -T_z & T_y \\ T_z & 0 & -T_x \\ -T_y & T_x & 0  \end{matrix} \right|$
+$\mathbf{S} = \left( \begin{matrix} 0 & -T_z & T_y \\ T_z & 0 & -T_x \\ -T_y & T_x & 0  \end{matrix} \right)$
 
 weird transformation matrix with 3 DoF and R also has 3 DoFs
 
@@ -544,7 +546,7 @@ Perform Gauss-Jordan elimination on polynomials.
 Number of samples requires depending on dataset size and \# of inliers for high certainty that the samples contains an inlier set:
 $\eta = 0.01$
 
-\includegraphics[width=0.5\columnwidth]{cv_figures/ransac.png}
+\includegraphics[width=0.9\columnwidth]{cv_figures/ransac.png}
 
 Restricted search around epipolar line (e.g. 1.5 pixels)
 Relax disparity restriction (along epipolar line)
@@ -554,21 +556,23 @@ Relax disparity restriction (along epipolar line)
 \subsection{Sequential / Incremental SfM}
 
 1. Initialize Motion
+
 2. Initialize Structure
+
 3. Extend Motion
 
  Initialize:
-• Compute pairwise epipolar geometry
-• Find pair to initialize structure and motion
-• Repeat:
-• For each additional view
-• Determine pose from structure 
-• Extend structure
-• Refine structure and motion
+\begin{itemize}
+\item Compute pairwise epipolar geometry
+\item Find pair to initialize structure and motion
+\item Repeat:
+\item For each additional view
+\item Determine pose from structure 
+\item Extend structure
+\item Refine structure and motion
+\end{itemize}
 
-
-Recap Essential matrix: 
-E=[t]xR
+Recap Essential matrix:  $E=[t]\timesR$
 • Motion for two cameras: [I|0], [R|t]
 • Essential Matrix decomposition: E=UΣVT
 • Recover E and t as
@@ -578,9 +582,7 @@ E=[t]xR
 
 Pose Estimation from 2D-3D Matches
 
-Generate hypothesis using 6 points
-(two equations per point)
-• Planar scenes are degenerate!
+Generate hypothesis using 6 points (two equations per point) - planar scenes are degenerate!
 
 Stereo Constraints and their implications:
 \begin{itemize}
@@ -597,25 +599,13 @@ Match Uniqueness For every point in one stereo image, there is at most one corre
 \item Structural Grouping - Corresponding feature groupings and their connectivity must be consistent.
 \end{itemize}
 
+\textbf{Photometric issues:} specularities, strongly non-Lambertian BRDF’s.
+\textbf{Surface structure:} lack of texture, repeating texture within horopter bracket
+\textbf{Geometric ambiguities:} as surfaces turn away, difficult to get accurate reconstruction
+(affine approximate can help); at the occluding contour, likelihood of good match but incorrect
+reconstruction. 
 
-Photometric issues:
-– specularities
-– strongly non-Lambertian BRDF’s
-
-Surface structure
-– lack of texture
-– repeating texture within horopter bracket
-
-Geometric ambiguities
-– as surfaces turn away, difficult to get accurate reconstruction
-(affine approximate can help)
-– at the occluding contour, likelihood of good match but incorrect
-reconstruction
-
-
-\subsection{Motion Initilization}
-Cheirality Constraint
-
+\textbf{Motion Initialization:} Cheirality Constraint
 
 \subsection{Global SfM}
 
@@ -798,7 +788,9 @@ For Levenberg–Marquardt algorithm the matrix dimensions are (3n + 11m) × (3n 
 Factorizing this is on the scale of expensive to infeasible. Strategies including interleaving (block coordinate descent) camera and geometry optimization and limiting the observations.
 
 ML Bundle Adjustment for Affine Camera Model
-\includegraphics[width=0.5\columnwidth]{cv_figures/ml_bundle.png}
+
+\includegraphics[width=1.0\columnwidth]{cv_figures/ml_bundle.png}
+
 Source: Multiple View Geometry
 
 

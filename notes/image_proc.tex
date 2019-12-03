@@ -1,24 +1,25 @@
-\refstepcounter{chapter}
-\chapter{Image Processing}
+%!TEX root = cv_ml_notes.tex
+\section{Image Processing}
 
 
 \subsection[]{Norms}
-L_1 norm
-L_2 norm
-Huber’s norm
-L_infty 
+$L_1$ norm
 
-Computational Photography
+$L_2$ norm
+
+Huber’s norm
+
+$L_\infty $
+
+
+\section{Computational Photography}
 
 Bayer Pattern
 
-Camera noise models
-
 Hough transform
 
- data drop noise because statistically its drop the original data values
+ 
 
-Deblurring
 
 
 \subsection{Integral Images}
@@ -32,7 +33,7 @@ and similarly for any rectangular region:
 
 $ i(A,B,c,D) = I(D) - I(B) - I(C)+I(A)$
 
-\includegraphics{https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Summed_area_table.png/220px-Summed_area_table.png}
+\url{https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Summed_area_table.png/220px-Summed_area_table.png}
 
 \section{ Filtering}
 \begin{itemize}
@@ -48,7 +49,7 @@ $ i(A,B,c,D) = I(D) - I(B) - I(C)+I(A)$
 
 Uses $3\times3$ operators which are convolved with the image to compute approximate (center difference?) derivatives in $x$ and $y$ directions.
 
-\include{img_proc/sobel.png}
+\includegraphics[width=0.9\columnwidth]{img_proc/sobel.png}
 
 \subsection{Canny Edge Detection}
 1. Apply Gaussian filter to smooth the image in order to remove the noise
@@ -102,20 +103,13 @@ Linear interpolation on a 2D grid.
 \section{Noise Models}
 
 \subsubsection{Salt and Pepper / Black White}
-
 This type of noise happens due to sudden interruption in the image signal.
-Typically the data is dropped.
+Also known as data drop noise because statistically its drop the original data values
 Can be removed using median or morphological filtering.
 
 \subsubsection{Gaussian noise}
-
-Can be estimated by taking a dark image and measuring the variance of the pixels.
-
 Noise which has a probability density function (PDF) equal to that of the normal distribution.
-
-\subsection{Denoising}
-
-Using median or mean filtering. 
+Can be estimated by taking a dark image and measuring the variance of the pixels. Removed by smoothing.
 
 \section{Semantic Computer Vision} 
 
@@ -125,20 +119,18 @@ Visual Odometry
 
 \section{Optic Flow}
 
-
 \section{Image Segmentation / Pixel Labeling}
 
 \section{Object Detection}
 
 \section{Classification Problems}
 
-
 \section{Event Cameras}
 
 \subsubsection{Features}
 
 \begin{itemize}
-\item Low-latency (~ 1 μs)
+\item Low-latency ($\sim1 \mu s$)
 \item No motion blur
 \item High dynamic range (140 dB instead of 60 dB)
 \item Ultra-low power (mean: 1mW vs 1W)
@@ -168,7 +160,7 @@ Where $C$
 
 Consider a pixel $p(x,y)$ with gradient $\nabla L(x,y)$ undergoing a motion $u\in(u,v)$ induced by a moving point $p \in\mathbb{R}^3 $
 
-\includegraphics{event_cameras_fig/event_cameras.png}
+\includegraphics[width=0.9\columnwidth]{event_cameras_fig/event_cameras.png}
 
 From brightness constancy assumption:
 
@@ -198,7 +190,7 @@ Input: last reconstructed frame + sequences of event tensors (spatiotemporal 3D 
 
 Network processes last $N$ events (10,000) 
 
-Trained in simulation only (without seeing a single real image) (we used our event camera simulator: http://rpg.ifi.uzh.ch/esim.html) 
+Trained in simulation only (without seeing a single real image) (we used our event camera simulator: \url{http://rpg.ifi.uzh.ch/esim.html} 
 
 Noise free simulation. We randomized the contrast sensitivity
 
