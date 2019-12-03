@@ -3,6 +3,8 @@
 \section{Computer Vision}
 
 Questions: How do you translate cameras?
+graphcut
+dynamic programming for stereo matching
 
 
 \section{Geometric Transformations}
@@ -37,6 +39,14 @@ The scale is unknown: $x \mapsto  w x_w$
 
 $ax+by+c = 0 \to (a,b,c)^T p = 0$ for every $p = (x,y,1)$ on the line.
 
+The nice thing about this: for two Euclidean points $p_{1,2} = (x,y,z) $ the line connecting them is given by their cross product: $l = p_1 \times p_2$. 
+
+Similarly, for two lines, their intersection point is given by the cross product: 
+$p = l_1 \times l_2$
+
+From homogenous points to cartesian image points divide by z. 
+
+
 \subsubsection{Projection}
 
 A projectivity is an invertible mapping $h$ from  to itself such that three points $x_1 , x_2 , x_3$ lie on the same line if and only if $h(x_1), h(x_2 ), h(x_3)$ do:
@@ -67,17 +77,23 @@ A point in an image projected to the world is known up to a scale factor.
 
 % $\left( \begin{matrix} \cos  \alpha & \sin \alpha  & t_x \\  -\sin \alpha & \cos \alpha & t_y \\ 0 & 0 & 1  \end{matrix} \right)$
 
-\subsubsection{Homography}
+\subsubsection{Planar Homography}
 
-Relates planar images.
+Relates planar images. Has eight DoFs, can be determind from four point correspondnces.
+(basically we're estimating the perspective transformation from one plane to another)
+
+From point relations in Euclidean coordinates, can derive a system for the homography. 
+
+This results in a system $Ah = 0$ which is solved using SVD. 
+The system is either determined exactly and overdetermind, in that case the smallest eigenvalue is a measure of the quality of the fit.
 
 When working with homogenous coordinates, apply homography to homogenous coordinates and then divide by $z$.
 
-Simple Geometric relations using homography:
+% Simple Geometric relations using homography:
 
-Two lines intersection - $l_1,l_2$ - find $x = l_1 \times l_2$  (based on normal equations)
+% Two lines intersection - $l_1,l_2$ - find $x = l_1 \times l_2$  (based on normal equations)
 
-Line through two points: $l = x_1 \times x_2 $
+% Line through two points: $l = x_1 \times x_2 $
 
 \paragraph{Homography Line Transformation}
 
@@ -98,13 +114,20 @@ $\left( \begin{matrix} x_1^T \\ x_2^T \\ x_3^t \end{matrix} \right) \pi = 0 $
 
 The camera model relates pixels and rays in space
 
-Principal axis - usually denoted as $z$, faces into the world
+Optical axis - usually denoted as $z$, faces into the world.
+The optical axis passes between the camera origin and the principal point in the image.
 
-Principal point - the point at which the principal axis passes through the image sensor
+Principal point - the point at which the principal axis passes through the image plane.
 
-\subsection{Pinhole Camera Model}
+Image plane - can be visualized in front of the sensor, the formulation is equivilant.
+
+
+\subsection{Perspective Camera Model}
 The camera matrix projects from the world space to image space. Using homogenous coordinates allows for translation.
 
+The actual image plane is actually only a few mm wide.
+
+Central Projection Model
 \subsection{Camera Intrinsic $K$}
 $K = \left( \begin{matrix} 
 \alpha_x & \gamma & u_0 & 0 \\
@@ -386,7 +409,7 @@ Small difference between frames
 
 Potential large difference overall
 
-\subsection{KLT - Kanade Lukas Tameri}
+\subsection{KLT - Kanade Lukas Tomasi}
 \begin{itemize}
 \item Using the auto-correlation matrix, assumption that the motion is small.
 \item Linearize and solve.
@@ -559,6 +582,36 @@ Generate hypothesis using 6 points
 (two equations per point)
 • Planar scenes are degenerate!
 
+Stereo Constraints and their implications:
+\begin{itemize}
+\item 1-D Epipolar Search -  Arbitrary images of the same scene may be rectified based on epipolar geometry such that stereo matches lie along onedimensional scanlines. This reduces the computational complexity
+and also reduces the likelihood of false matches.
+\item Monotonic Ordering  -Points along an epipolar scanline appear in the same order in both stereo images, assuming that all objects in the scene are approximately the same distance from the cameras.
+\item Image Brightness Constancy - Assuming Lambertian surfaces, the brightness of corresponding
+points in stereo images are the same.
+Match Uniqueness For every point in one stereo image, there is at most one corresponding point in the other image.
+\item Disparity Continuity - Disparities vary smoothly (i.e. disparity gradient is small) over most of the image. This assumption is violated at object boundaries.
+\item Disparity Limit - The search space may be reduced significantly by limiting the disparity range, reducing both computational complexity and the likelihood of false matches.
+\item Fronto-Parallel Surfaces - The implicit assumption made by area-based matching is that objects have fronto-parallel surfaces (i.e. depth is constant within the region of local support). This assumption is violated by sloping and creased surfaces.
+\item Feature Similarity - Corresponding features must be similar (e.g. edges must have roughly the same length and orientation).
+\item Structural Grouping - Corresponding feature groupings and their connectivity must be consistent.
+\end{itemize}
+
+
+Photometric issues:
+– specularities
+– strongly non-Lambertian BRDF’s
+
+Surface structure
+– lack of texture
+– repeating texture within horopter bracket
+
+Geometric ambiguities
+– as surfaces turn away, difficult to get accurate reconstruction
+(affine approximate can help)
+– at the occluding contour, likelihood of good match but incorrect
+reconstruction
+
 
 \subsection{Motion Initilization}
 Cheirality Constraint
@@ -708,12 +761,47 @@ merged point clouds, and efficient, high-quality mesh generation.
 
 Bundle adjustment amounts to jointly refining a set of initial camera and structure parameter estimates for finding the set of parameters that most accurately predict the locations of the observed points in the set of available images. 
 
+The asumption is that image measurements are noisy then the equations $x_i = P_i X$ will not be satisfied exactly. 
+
+Bundle adjustment is a maximum likelihood solution (maximizes the probability of the model) under Gaussian  noise assumption. 
+
+We wish to estimate projection matrices Pˆi and 3D points X􏰟 j which project exactly to image points
+xˆij as xˆij = PˆiX􏰟j, and also minimize the image distance between the reprojected point and detected (measured) image points xij for every view in which the 3D point appears,
+
 Input: $n \; 3D$ points, $m$ views, $x_{ij}$ is the projection of theh $i$th point on image $j$. $v_{ij}$
+This estimation involving minimizing the reprojection error 
+
+$\min \sum_{i,j} d(P^X^j, x_j^i)^2 $ in image space.
 
 \url{https://wikimedia.org/api/rest_v1/media/math/render/svg/c3d1bb3a51f8bafc07c30a99c3f3f15e008d0259}
  denote the binary variables that equal 1 if point $i$ is visible in image $j$. Assume also that each camera $j$  is parameterized by a vector $\mathbf{a}_{j}$ and each 3D point $i$ by a vector $\mathbf{b}_{i}$ . 
 
 Bundle adjustment minimizes the total reprojection error with respect to all 3D point and camera parameters, specifically
+
+It's advanatages: tolerant to missing data (sum), while providing a true ML estimate. 
+Allows assignment of individual covariances to each measurement
+may also be extended to include estimates of priors and constraints on camera parameters or point positions
+
+Cons:
+requires a good initialization 
+can become an extremely large minimizition problem (solution: use last N (key)frames)
+
+Iterative minimization:
+
+Since each camera has 11 degrees of freedom 
+Each 3D space point 3 degrees of freedom
+
+n points over m views requires minimization over 3n + 11m parameters. 
+
+For Levenberg–Marquardt algorithm the matrix dimensions are (3n + 11m) × (3n + 11m). 
+
+Factorizing this is on the scale of expensive to infeasible. Strategies including interleaving (block coordinate descent) camera and geometry optimization and limiting the observations.
+
+ML Bundle Adjustment for Affine Camera Model
+\includegraphics[width=0.5\columnwidth]{cv_figures/ml_bundle.png}
+Source: Multiple View Geometry
+
+
 
 $\min _{{{\mathbf  {a}}_{j},\,{\mathbf  {b}}_{i}}}\displaystyle \sum _{{i=1}}^{{n}}\;\displaystyle \sum _{{j=1}}^{{m}}\;v_{{ij}}\,d({\mathbf  {Q}}({\mathbf  {a}}_{j},\,{\mathbf  {b}}_{i}),\;{\mathbf{x}}_{{ij}})^{2}$
 
@@ -726,6 +814,33 @@ Minimizes a physically meaningful criterion
 This is typically solved using Levenberg–Marquardt Algorithm
 
 When solving the minimization problems arising in the framework of bundle adjustment, the normal equations have a sparse block structure owing to the lack of interaction among parameters for different 3D points and cameras.
+
+\paragraph{LM}
+
+Here the idea is that the energy terms are separable, and when structured in a matrix we have a distinct block structure with a diagonal block which depends on position only. 
+
+Computing its inverse is easy, which allows to solve for a correction in positions, which then reduce the problem of the solving the correction to the camera parameters to solving a smaller linear system.
+
+The normal equation is then solved by Cholesky factorization, as the matrix is not necc. invertible and its inverse is not sparse.
+
+\paragraph{Cost Function}
+LM requires a cost function which is robust to outliers. 
+LS assumes a Gaussian noise distribution and independent observations, this will lead to poor convergence in the presence of any outliers. 
+
+Using a Cauchy or Huber loss is more robust.
+
+\paragraph{Reconstruction from Sequences}
+
+There is an ordering on the images
+Small baseline - easy to identify correspondences, both in appearance 
+
+The disadvantage of a small baseline is that the 3D structure is estimated poorly. However, this disadvantage is mitigated by tracking over many views in the sequence so that the effective baseline is large.
+
+
+\paragraph{Feature Tracking}
+
+Over the sequence, have to think about how the appearance of the feature changes.
+Inc. updating the features can cause to drift in localization and introduce error, while affine mapping to a keyframe at every step is also not likely to work.
 
 
 \subsubsection{Surface Reconstruction}
@@ -766,7 +881,7 @@ Solving the normal equation can be computationally inefficient. Schur-Complement
 (H 􏰃HT H􏰃1H )􏰌 􏰆􏰐 􏰃􏰐HT H􏰃1 􏰑 C SC S SC C C S SC S
 Ax 􏰆 b Don’t solve as x=A-1b: A is sparse, but A-1 is not!
 • Use sparse matrix factorization to solve system
- 1. LU Factorization
+1. LU Factorization
 2. QR factorization
 3. Cholesky Factorization
 
@@ -809,9 +924,11 @@ The main objective of Loop Closures is to correct the robot/camera trajectory, w
 
 SLAM uses scene matches over the previous N frames to estimate camera pose and 3D keypoint locations. There are different algorithms that can do this task:
 
-- Kalman filtering
-- Particle filtering
-- Bundle Adjustment.
+\subsection{Kalman Filters}
+Kalman filtering, also known as linear quadratic estimation (LQE), is an algorithm that uses a series of measurements observed over time, containing statistical noise and other inaccuracies, and produces estimates of unknown variables that tend to be more accurate than those based on a single measurement alone, by estimating a joint probability distribution over the variables for each timeframe
+
+\subsection{Particle Filters}
+\yk{TODO}
 
 Visual SLAM is supposed to work in real-time on an ordered sequence of images acquired from a fixed camera set-up. Large scale visual SLAM is typically restricted to trajectories of a few kilometers.
 
@@ -840,8 +957,11 @@ Recognizing features/structures that are already seen. This is used to correct c
 We use SIFT as it accounts for the major variation encountered during hand-held RGB-D scanning, namely: image translation, scaling, and rotation. Potential matches between each pair of frames are then filtered to remove false positives and produce a list of valid pairwise correspondences as input to global pose optimization
 
 2. Correspondence Filtering. To minimize outliers, we filter the sets of detected pairwise correspondences based on geometric and photometric consistency.
+
 3. Key Point Correspondence Filter: For a pair of frames fi and fj with detected corresponding 3D points P from fi , and Q from fj , the key point correspondence lter nds a set of correspondences which exhibit a stable distribution and a consistent rigid transform. Use this to compute a RMSD (Kabsch Algorithm)
+
 4. Surface Area Filtering
+
 5. Dense Verication Finally, we perform a dense two-sided geometric and photometric verication step. For frames fi and fj , we use the computed relative transform Tij from the key point correspondence lter to align the coordinate systems of fi and fj . We measure the average depth discrepancy, normal deviation and photoconsistency of the re-projection in both directions
    - This is potentially sensitive to occlusion error, so we discard correspondences with 
    - high depth discrepancy
@@ -850,11 +970,6 @@ We use SIFT as it accounts for the major variation encountered during hand-held 
 
 \subsubsection{Sparse Volumetric Representation}
 
-
-
-\subsection{Kalman Filters}
-
-The \emph{Kalman filter} is an efficient recursive filter that estimates the internal state of a linear dynamic system from a series of noisy measurements.
 
 \section{Object Detection}
 
@@ -895,5 +1010,4 @@ Think about the function representation of the feature how the image and how it 
 
 This rough estimate can be refined later.
 
-\section{Image Segmentation}
 

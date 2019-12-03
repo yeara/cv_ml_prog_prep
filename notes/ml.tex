@@ -1,4 +1,6 @@
-\chapter{Machine Learning}
+%!TEX root = computer_vision_notes.tex
+% \refstepcounter{chapter}
+\section{Machine Learning}
 
 \section{Resources}
 \begin{itemize}
@@ -18,7 +20,7 @@ Training set - with $m$ number of training examples, $x$ input variables / featu
 
 $(x^{(i)},y^{(i)})$ is a training example
 
-\subsection{ Linear Regression (Uni-variable)
+\subsection{ Linear Regression (Uni-variable)}
 
 Hypothesis: $h_\theta(x) = \theta_0 + \theta_1x$ 
 
@@ -38,13 +40,13 @@ GD will converge
 
 Normal Equations can be used to perform a single step solution for linear models, but GD scales better for large training sets
 
-\subsubsection{Stochastic Gradient Descent
+\subsubsection{Stochastic Gradient Descent}
 
 Computes the gradient with respect to each training example directly and aggregates it. 
 
 Can  converge to a minimum much faster than batch gradient descent 
 
-\subsection{Multi Variable Linear Regression
+\subsection{Multi Variable Linear Regression}
 
 For $n$ features, define $ x\in\mathbb{R}^{n+1}$, $0th$ indexed vector,  the features vector, where $x_0^{(i)} := 1 \forall i$  
 
@@ -92,7 +94,7 @@ Gradient verification with FD
 
 If $\alpha$ is small enough, GD should decrease for every iteration
 
-![convergence](/Users/kozlovy/Documents/2019_JobApplications/Notes/ml_figures/convergence.png)
+\includegraphics{ml_figures/convergence.png}
 
 A - good convergence
 
@@ -185,7 +187,7 @@ Normal Equation
 \subsection{When is $X^TX$ non-invertible?}
 
 \begin{itemize}
-\item linearly dependent features - i.e. size in m^2 and size in feet squared
+\item linearly dependent features - i.e. size in $m^2$ and size in feet squared
 \begin{itemize}
 \item remove features
 \end{itemize}
@@ -200,7 +202,7 @@ Normal Equation
 
 \subsection{Two Class Problems}
 
-<img src="/Users/kozlovy/Documents/2019_JobApplications/Notes/ml_figures/log_threshold.png" alt="log_threshold" style="zoom:33%;" />
+\includegraphics{ml_figures/log_threshold.png}
 
 Using linear regression model + threshold:
 
@@ -218,7 +220,7 @@ Logistic/sigmoid function: $g(z) = \frac{1}{1+e^{-z}}$
 
 Together: $h_\theta(x)=\frac{1}{1+e^{-\theta^T x}}$
 
-![sigmoid](/Users/kozlovy/Documents/2019_JobApplications/Notes/ml_figures/sigmoid.png)
+\includegraphics{ml_figures/sigmoid.png}
 
 Has  asymptotes at {0,1}
 
@@ -264,7 +266,7 @@ $(h(x)=0, y = 0)$ or$(h(x) = 1, y = 1)$  - cost = 0
 
 Very high penalization if $(h(x)=1, y = 0)$ or$(h(x) = 0, y = 1)$ due to the cost function going asymptotically to $\infty$ :
 
-<img src="/Users/kozlovy/Documents/2019_JobApplications/Notes/ml_figures/cost_function.png" alt="cost_function" style="zoom:25%;" />
+\includegraphics{ml_figures/cost_function.png}
 
 \subsubsection{Simplified Cost Function}
 
@@ -294,7 +296,7 @@ And vectorized:
 
 $\theta:=\theta - \frac{\alpha}{m}X^T(g(X\theta)-\vec{y})$
 
-\subsection{ Maximum Likelihood Estimation + Convexity
+\subsection{ Maximum Likelihood Estimation + Convexity}
 
 Convexity: gives us lower bounds on the first order approximation of the function (i.e. the first order approximation is guaranteed to be larger than or equal to the real function value).
 
@@ -363,20 +365,21 @@ For new input choose $\max_ih_\theta^i(x)$
 
 \section{ Overfitting vs. Bias}
 
-![overfitting](/Users/kozlovy/Documents/2019_JobApplications/Notes/ml_figures/overfitting.png)Underfitting -> high bias. 
+\includegraphics{ml_figures/overfitting.png}
+Underfitting -> high bias.
 
 Overfitting, high variance
 
 High variance - fitting a high order polynomial can be used to fit almost any function, not enough data to give a good hypothesis
 
-\item If we have too many features, the learned hypothesis may fit the training data very well, but fail to generalize
+If we have too many features, the learned hypothesis may fit the training data very well, but fail to generalize
 
 \subsubsection{Addressing Overfitting}
 
 Reduce number of features
 
-\item requires deciding which feature to keep and discard
-\item model selection algorithms
+Requires deciding which feature to keep and discard
+Model selection algorithms
 
 Regularization
 

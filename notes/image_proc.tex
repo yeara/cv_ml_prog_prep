@@ -2,6 +2,11 @@
 \chapter{Image Processing}
 
 
+\subsection[]{Norms}
+L_1 norm
+L_2 norm
+Huber’s norm
+L_infty 
 
 Computational Photography
 
@@ -9,10 +14,17 @@ Bayer Pattern
 
 Camera noise models
 
+Hough transform
+
+ data drop noise because statistically its drop the original data values
+
+Deblurring
+
+
 \subsection{Integral Images}
 
 
-The value at any point (*x*, *y*) in the summed-area table is the sum of all the pixels above and to the left of (*x*, *y*), inclusive where $i(x,y)$  is the value of the pixel at (x,y). The summed-area table can be computed efficiently in a single pass over the image:
+The value at any point (x, y) in the summed-area table is the sum of all the pixels above and to the left of (*x*, *y*), inclusive where $i(x,y)$  is the value of the pixel at (x,y). The summed-area table can be computed efficiently in a single pass over the image:
 
 $I(x,y) = i(x-1,y-1) + I(x,y-1) + I(x-1,y)-I(x-1,y-1)$
 
@@ -25,30 +37,48 @@ $ i(A,B,c,D) = I(D) - I(B) - I(C)+I(A)$
 \section{ Filtering}
 \begin{itemize}
 \item Color Conversion
+
 \item Thresholding
 \item Smoothing
+
 \item Morphology
-\item Gradients
-\item Canny Edge Detection
+\item Gradient
+
+\subsection{Sobel Operator}
+
+Uses $3\times3$ operators which are convolved with the image to compute approximate (center difference?) derivatives in $x$ and $y$ directions.
+
+\include{img_proc/sobel.png}
+
+\subsection{Canny Edge Detection}
+1. Apply Gaussian filter to smooth the image in order to remove the noise
+2. Find the intensity gradients of the image
+	The edge orientation is the atan of the intensity of the gradient in each dimension
+	The edge magnitude is the sqrt
+3. Apply non-maximum suppression to get rid of spurious response to edge detection
+4. Apply double threshold to determine potential edges
+5. Track edge by hysteresis: Finalize the detection of edges by suppressing all the other edges that are weak and not connected to strong edges.
+
 \item Contours
 \item Histograms
 \end{itemize}
 
 \subsection{Convolution}
 
-\subsection{Denoising}
 
-Median/mean filtering
 
-\subsection{Deblurring}
+\section{Image Deblurring}
 
-\subsubsection{Fourier Transform}
 
-\subsection{Pattern / Function Matching }
+
+\section{Fourier Transform}
+
+\section{Image Compression}
+
+\section{Optic Flow}
+
 
 \subsection{Gaussian Pyramids}
-
-
 
 Gradient consistency assumption + intensity consistency assumption
 
@@ -60,32 +90,38 @@ Results in a dense optic flow field.
 
 Works well for small changes.
 
-\section{Up and Down Sampling}
+\section{Interpolation}
 
+\subsection{Nearest Neighbor}
 
-Nearest Neighbor
+\subsection{Bilinear Interpolation}
 
-Linear
+Linear interpolation on a 2D grid. 
 
-Bi-linear
 
 \section{Noise Models}
 
 \subsubsection{Salt and Pepper / Black White}
 
 This type of noise happens due to sudden interruption in the image signal.
-
+Typically the data is dropped.
 Can be removed using median or morphological filtering.
 
 \subsubsection{Gaussian noise}
 
-\subsubsection{Blue noise}
+Can be estimated by taking a dark image and measuring the variance of the pixels.
+
+Noise which has a probability density function (PDF) equal to that of the normal distribution.
+
+\subsection{Denoising}
+
+Using median or mean filtering. 
 
 \section{Semantic Computer Vision} 
 
 Visual Odometry
 
-\subsubsection{Silhouette Segmentation / Visual Hull}
+\section{Silhouette Segmentation / Visual Hull}
 
 \section{Optic Flow}
 
@@ -165,4 +201,7 @@ Network processes last $N$ events (10,000)
 Trained in simulation only (without seeing a single real image) (we used our event camera simulator: http://rpg.ifi.uzh.ch/esim.html) 
 
 Noise free simulation. We randomized the contrast sensitivity
+
+
+\section{Image Segmentation}
 
