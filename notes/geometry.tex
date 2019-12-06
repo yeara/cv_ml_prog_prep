@@ -1,7 +1,7 @@
-\refstepcounter{chapter}
-\chapter{Geometry Processing} 
+%!TEX root = cv_ml_notes.tex
+\section{Geometry Processing} 
 
-\section{Basics}
+\subsection{Basics}
 
 Plane normal equation
 
@@ -9,8 +9,7 @@ Plane point distances
 
 Barycentric coordinates
 
-
-\section{ Surface Representations}
+\subsection{ Surface Representations}
 
 Explicit:
 \begin{itemize}
@@ -31,50 +30,53 @@ Implicit - voxel grid:
 \end{itemize}
 
 Volumetric modeling for vision:
-• Flexible and robust surface representation
-• Handles (changes of) complex surface topologies effortlessly
-• Ensures watertight surface / manifold / no self- intersections
-• Allows to sample the entire volume of interest by storing information about space opacity
-• Voxel processing is often easily parallelizable
+\begin{itemize}
+\item Flexible and robust surface representation
+\item Handles (changes of) complex surface topologies effortlessly
+\item Ensures watertight surface / manifold / no self- intersections
+\item Allows to sample the entire volume of interest by storing information about space opacity
+\item Voxel processing is often easily parallelizable
+\end{itemize}
 
-
-Drawbacks:
-Implicit surface representation
+Drawbacks: Implicit surface representation
 
 \subsection{Marching Cubes}
-Recovers an isosurface from a volume
-ensures a watertight surface
-Can be done per voxel
-15 combinations of surface intersections per cube
-Precise normal specification
-Accuracy depends on resolution
+\begin{itemize}
+\item Recovers an isosurface from a volume
+\item ensures a watertight surface
+\item Can be done per voxel
+\item 15 combinations of surface intersections per cube
+\item Precise normal specification
+\item Accuracy depends on resolution
+\end{itemize}
 
 Trivial merging or overlapping of different surfaces based on the corresponding implicit functions:
-• minimum of the values for merging • averaging for overlapping
+minimum of the values for merging, averaging for overlapping
 
 Limitations of Marching Cubes
-• Maintains 3D entries rather than a 2D surface, i.e.,
-higher computational and memory requirements
-• Generates consistent topology, but not always the topology you wanted
-• Problems with very thin surfaces if resolution not high enough
+\begin{itemize}
+\item  Maintains 3D entries rather than a 2D surface, i.e., higher computational and memory requirements
+\item  Generates consistent topology, but not always the topology you wanted
+\item  Problems with very thin surfaces if resolution not high enough
+\end{itemize}
 
+\subsection{ICP}
 
-\section{ICP}
+Point to point
 
-Algorithm:
+Point to plane
 
-\section{Point Cloud Merge}
+\subsection{Point Cloud Merge}
 
-ICP for point cloud matching
+\begin{enumerate}
+\item ICP for point cloud matching
+\item Normal Estimation
+\item Outlier detection / removal 
+\item Surface / mesh fitting / template fitting
+\end{enumerate}
 
-Normal Estimation
-
-Outlier detection / removal 
-
-Surface / mesh fitting / template fitting
-
-\subsubsection{Geometric Representations}
+\subsection{Geometric Representations}
 
 Bezier curves
 
-\section{Laplacian Deformation}
+\subsection{Laplacian Deformation}
