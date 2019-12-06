@@ -2,11 +2,11 @@
 % \refstepcounter{chapter}
 \section{C++}
 
-\subection{Object Oriented Programming}
+\subsection{Object Oriented Programming}
 
-\textbf{Abstraction} - class should not expose its data members. Can change internal repn. without affecting the rest of the codebase.
+\textbf{Abstraction} - class should not expose its data members. Can change internal representation without affecting the rest of the codebase.
 
-\textbf{Inheritence} - private, protected, public
+\textbf{Inheritance} - private, protected, public
 
 \textbf{Polymorphism} - virtual function, virtual function table, virtual destructors, covariant return types.
 \textbf{}
@@ -15,19 +15,19 @@
 
 \textbf{local class} - a class defined within the scope of a different class.
 
-\textbf{this} -  point
+\textbf{this} - pointer to current instant of object, passed implicitly. 
 
-Overloading
+\textbf{Overloading}
 
-The rule of 3,5
+\textbf{The rule of 3,5}
 
-Constructors - special member function that is called whenever a new instance of a class is created. The compiler calls the constructor after the new object has been allocated in memory, and converts that "raw" memory into a proper, typed object. 
+\textbf{Constructors} - special member function that is called whenever a new instance of a class is created. The compiler calls the constructor after the new object has been allocated in memory, and converts that "raw" memory into a proper, typed object. 
 
 Default Constructors - called by the compiler by default, has no arguments.
 
 \subsection{static}
 
-static objects - 
+% static objects - 
 
 static data members -  will cause that member to be shared by all instances of the owner class and derived classes. To use static data members you must declare the data member as static and initialize it outside of the class declaration, at file scope. (i.e. it lives in the grand program context)
 
@@ -37,50 +37,60 @@ static member functions - callable without an object. The function does not take
 
 implicit cast / C style cast - static cast, avoid.
 
-reinterpret_cast -  used to cast between incompatible pointer types
-static_cast - relies on compile time information, does not check for type safety
-dynamic_cast - checks for type safety
+reinterpret\_cast -  used to cast between incompatible pointer types
+static\_cast - relies on compile time information, does not check for type safety
+dynamic\_cast - checks for type safety
 
 \subsection{auto}
 
 \subsection{Smart pointers}
- - unique_ptr - only a single copy can exist. follows RAI. releases memory in destructor.
- - 
 
-\subsection{RAII}
-Resource Acquisition Is Initialization
+\textbf{unique\_ptr} - only a single copy can exist. follows RAI. releases memory in destructor.
+
+\textbf{shared\_ptr}
+
+\textbf{weak\_ptr}
+
+\subsection{RAII - Resource Acquisition Is Initialization}
 
 Ensure exception safety. 
+
 RAII makes it possible to avoid resource leaks without extensive use of
 
 \subsection{Templates}
 
-instantiated at compile-time with the source code.
-type safe.
-allow user-defined specialization.
-allow non-type parameters.
-use “lazy structural constraints”.
-support mix-ins.
+Instantiated at compile-time with the source code.
+
+Type safe.
+
+Allow user-defined specialization.
+
+Allow non-type parameters.
+
+Use “lazy structural constraints”.
+
+Support mix-ins.
 
 \subsection{const}
 
-volatile - 
+\subsection{"exotic" keyword}
 
-mutable - 
+\textbf{volatile}
+
+\textbf{mutable}
 
 \subsection{lambda functions}
 
+\subsection{Design Patterns}
 
-\section{Design Patterns}
+\subsection{Creational Patterns}
+\textbf{Factory}
+\textbf{Abstract Factory}
 
-Creational Patterns
+\subsection{Structural Patterns} 
 
-Factory
-Abstract Factory
+\textbf{Adapter} - to adapt two classes which are incompatible (the example was HinduAdabpter inheirts from Hindu which calls a Muslim ritual.
 
-Structural Patterns
-Adapter - to adpat two classes which are incompatible (the example was HinduAdabpter inheirts from Hindu which calls a muslim ritual.
+\textbf{Bridge} - separates interface from its implementation
 
-Bridge - separates interface from its implementation
-
-Behavioral Patterns
+\subsection{Behavioral Patterns}
