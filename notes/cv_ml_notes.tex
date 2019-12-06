@@ -17,6 +17,7 @@
 % \usepackage{algpseudocode}
 % \usepackage{csquotes}
 \usepackage{pdfpages}
+\usepackage{enumitem}
 
 % pdf hyperlinks
 \usepackage[pdftex,
@@ -40,6 +41,17 @@
 
 
 \DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+
+\setlist[itemize]{itemsep=0.7pt}
+% \setlist[itemize,1]{label=$\triangleleft$}
+% \setlist[enumerate]{labelsep=*, leftmargin=0pt}
+% \setlist[enumerate,1]{label = \arabic*.,
+% ref = \arabic*}
+% \setlist[enumerate,2]{label = \emph{\alph*}),
+% ref = \theenumi.\emph{\alph*}}
+% \setlist[enumerate,3]{label = \roman*),
+% ref = \theenumii.\roman*}
+% \setlist[description]{font=\sffamily\bfseries}
 
 \usepackage{caption} 
 
@@ -71,36 +83,16 @@
 \tableofcontents
 \clearemptydoublepage
 
-% the \begingroup magic will prevent latex from starting every table on a new double page
-% \begingroup
-% 	\let\cleardoublepage\clearpage
-% 	\phantomsection % phantomsection is used here to get the table of contents page numbering right
-% 	\addcontentsline{toc}{chapter}{List of Figures}
-% 	\listoffigures
-% 	\clearpage
-
-	% \phantomsection % phantomsection is used here to get the table of contents page numbering right
-	% \addcontentsline{toc}{chapter}{List of Algorithms}
-	% \listofalgorithms
-	% \clearpage
-
-	% \phantomsection % phantomsection is used here to get the table of contents page numbering right
-	% \addcontentsline{toc}{chapter}{List of Tables}
-	% \listoftables
-% \endgroup
-
-% \cleardoublepage
-
 % \pagenumbering{roman}
 \setcounter{page}{1}
 
 % \setcounter{chapter}{0}
 \include{front_matter}
 \include{cv}
-\include{ml}
-\include{image_proc}
-\include{geometry}
-\include{math}
+% \include{ml}
+% \include{image_proc}
+% \include{geometry}
+% \include{math}
 % \include{deep_learning}
 
 % \appendix
