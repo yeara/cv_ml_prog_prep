@@ -1,6 +1,6 @@
 %!TEX root = cv_ml_notes.tex
 % \refstepcounter{chapter}
-\section{Computer Vision}
+\chapter{Computer Vision}
 
 \section{Geometric Transformations}
 
@@ -176,34 +176,33 @@ For capturing a planar object:
 \item This relates to the maximum likelihood estimate:
 	Given $n\ge 4$ 2D to 2D point correspondences {$x_i\leftrightarrow x_i\prime$}. 
 	Determine the Maximum Likelihood Estimation of $H$ (this also implies computing optimal $x_i^\prime=Hx_i$) 
+\end{enumerate}
 
-Algorithm
-
+To perform the last step: 
 (i) Initialization compute an initial estimate using normalized DLT or RANSAC
 (ii) Geometric minimization of symmetric transfer error: 
 
-- Minimize using Levenberg-Marquardt over 9 entries of $h$ or reprojection error:
-
+Minimize using Levenberg-Marquardt over 9 entries of $h$ or reprojection error:
 - compute initial estimate for optimal $x_i$
 - minimize cost over ${H,x1,x2,...,xn}$
 - if many points, use sparse method
-\end{itemize}
 
 \subsubsection{Other Considerations}
-
-- Radial lens distortion
-- Rolling shutter effects
+\begin{itemize}
+\item Radial lens distortion
+\item Rolling shutter effects
+\end{itemize}
 
 \section{Image Features and Matching}
 
-Local features - compact description of image regions.
+\textbf{Local features} - compact description of image regions.
 
-Detectors are used to find salient structures in images. Common salient structures include corners, blobs
+\textbf{Detectors} are used to find salient structures in images. Common salient structures include corners, blobs
 and keypoints.
 
-A descriptor is a compact representation of the image region around that keypoint. (Good) Descriptors allow to establish matches between images by descriptor comparison and for subpixel localization.
+A \textbf{descriptor} is a compact representation of the image region around that keypoint. (Good) Descriptors allow to establish matches between images by descriptor comparison and for subpixel localization.
 
-\subsection{ Invariant Descriptors \& Matching}
+\subsection{Invariant Descriptors \& Matching}
 
 Feature matching: extract features independently and match by comparing descriptors.
 
@@ -593,22 +592,26 @@ reconstruction.
 
 \subsection{Global SfM}
 
-Initialize:
-• Compute pairwise epipolar geometry
+SfM approaches often work on an unordered set of images. Often computed in the cloud with little to no time constraints.
+
+One of the challenges in SfM is to retrieve near-by images, and add images one by one to a growing graph while accounting for potential outlier images so that robust reconstruction maybe performed. (i.e. Building Rome in a Day also talked a lot about system design).
+
+Initialize: Compute pairwise epipolar geometry
 
 Compute:
-• Estimate all orientations
-• Estimate all positions
-• Triangulate structure
-• Refine structure and motion (bundle adjustment)
+\begin{itemize}
+\item Estimate all orientations
+\item Estimate all positions
+\item Triangulate structure
+\item Refine structure and motion (bundle adjustment)
+\end{itemize}
 
 Pros: More efficient, more accurate 
 
 Con: Less robust
 
-SfM approaches often have to work on an unordered set of images often computed in the cloud with little to no time constraints and might employ different cameras
 
-One of the challenges in SfM is to retrieve near-by images, and add images one by one to a growing graph while accounting for potential outlier images so that robust reconstruction maybe performed. (i.e. that MS/GOOG Building  Rome in a Day also talked a lot about system design)
+
 
 SFM might be employed on a huge set of potential images. It's a challenge to retrieve near-by images, and add images one by one to a growing graph while accounting for potential outlier images so that robust reconstruction maybe performed. 
 
@@ -630,7 +633,7 @@ Task: construct 3D model from 2 images of a calibrated camera.
 \item 3D reconstruction
 \end{enumerate}
 
-\includegraphics[width=0.9\columnwidth]{cv_figures/disparity.png}
+\includegraphics[width=0.75\columnwidth]{cv_figures/disparity.png}
 
 Baseline - dist. between camera centers
 \begin{itemize}
@@ -738,13 +741,12 @@ The assumption is that image measurements are noisy then the equations $x_i = P_
 
 Bundle adjustment is a maximum likelihood solution (maximizes the probability of the model) under Gaussian  noise assumption. 
 
-We wish to estimate projection matrices $P^i$ and $3D$ points $X􏰟_j$ which project exactly to image points
-$x^{ij}$ as $x^{ij} = P^iX_􏰟j$, and also minimize the image distance between the reprojected point and detected (measured) image points x^{ij} for every view in which the 3D point appears,
+We wish to estimate projection matrices $P^i$ and $3D$ points $X_j$ which project exactly to the image point $x^{ij}$ as $x^{ij} = P^i X_j$ and also minimize minimize the image distance between the reprojected point and detected (measured) image points $x^{ij}$ for every view in which the 3D point appears,
 
 Input: $n \; 3D$ points, $m$ views, $x_{ij}$ is the projection of the $i$th point on image $j$. $v_{ij}$
 This estimation involving minimizing the re-projection error 
 
-$\min \sum_{i,j} d(P^X^j, x_j^i)^2 $ in image space.
+$\min \sum_{i,j} d(P X^j, x_j^i)^2 $ in image space.
 
 \url{https://wikimedia.org/api/rest_v1/media/math/render/svg/c3d1bb3a51f8bafc07c30a99c3f3f15e008d0259}
  denote the binary variables that equal 1 if point $i$ is visible in image $j$. Assume also that each camera $j$  is parameterized by a vector $\mathbf{a}_{j}$ and each 3D point $i$ by a vector $\mathbf{b}_{i}$ . 
@@ -832,7 +834,7 @@ Refinement step in Structure-from-Motion.
 
 Produce jointly optimal 3D structures $P$ and camera poses $C$.
 
-Minimize total re-projection errors 􏰅$z$.
+Minimize total re-projection errors $z$.
 
 The cost function $\operatorname{argmin}_X \sum_i \sum_j \Delta z_{ij}^T W_{ij} \Delta z_{ij} $
 
@@ -847,8 +849,8 @@ $X = [P,C]$
 \item Newton method - second order approx, requires inverse Hessian computation - expensive
 \item Gauss - Newton - estimate the Hessian $H = J^TWJ$ and solve using normal equation - might get stuck and slow convergence 
 \item Levenberg-Marquardt - Regularized Gauss-Newton with damping factor. 
-􏰍 􏰎$ \lambda \to 0$ : Gauss-Newton (when convergence is rapid)
-􏰍 􏰎$ \lambda \to \infty$ : Gradient descent
+$\lambda \rightarrow 0$: Gauss-Newton (when convergence is rapid)
+$\lambda \rightarrow \infty$ Gradient descent
 \end{itemize}
 
 Solving the normal equation can be computationally inefficient. Schur-Complement technique is used to accelerate the computation. 

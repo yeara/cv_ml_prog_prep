@@ -1,23 +1,27 @@
-\documentclass[10pt,landscape,twocolumn]{article}
+\documentclass[10pt,landscape,twocolumn]{report}
 
 \usepackage[cm]{fullpage}
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman,english]{babel}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage[pdftex]{graphicx}
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage{pdfpages}
+\usepackage{enumitem}
+\usepackage{caption} 
+\usepackage[slantedGreek]{mathpazo}
+\usepackage{named}
+\usepackage{titlesec} % for compact chapter titles
 % \usepackage{appendix}
 % \usepackage{color}
 % \usepackage{colortbl} % for colored hlines in chapter pagestyle
-\usepackage{url}
 % \usepackage{scrpage2}
 % \usepackage{booktabs} % publication quality tables for LaTeX
-\usepackage{algorithm}
 % \usepackage{scrhack} % removes warning from KOMA
 % \usepackage{helvet} % sets sans-serif font
 % \usepackage{algpseudocode}
 % \usepackage{csquotes}
-\usepackage{pdfpages}
-\usepackage{enumitem}
 
 % pdf hyperlinks
 \usepackage[pdftex,
@@ -39,32 +43,31 @@
 		pdfpagelabels=true]{hyperref}
 
 
-
+%% Manually set formatting options
 \DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
 
 \setlist[itemize]{itemsep=0.7pt}
-% \setlist[itemize,1]{label=$\triangleleft$}
-% \setlist[enumerate]{labelsep=*, leftmargin=0pt}
-% \setlist[enumerate,1]{label = \arabic*.,
-% ref = \arabic*}
-% \setlist[enumerate,2]{label = \emph{\alph*}),
-% ref = \theenumi.\emph{\alph*}}
-% \setlist[enumerate,3]{label = \roman*),
-% ref = \theenumii.\roman*}
-% \setlist[description]{font=\sffamily\bfseries}
+\makeatother
 
-\usepackage{caption} 
+\setlength{\parindent}{0pt}
+% \setlength{\parskip}{0pt plus 0.5ex}
+\setlength{\parskip}{0.105cm}
 
-\usepackage[slantedGreek]{mathpazo}
+\setcounter{secnumdepth}{2}
 
-\usepackage{named}
-\bibliographystyle{named}
+\titleformat{\chapter}
+{\normalfont\Large\bfseries}{\thechapter.}{1em}{}
 
-\setlength\parindent{0pt}
+
+% \bibliographystyle{named}
+
 
 \input{macros}
 
 \graphicspath{{figures/}}
+
+
+
 
 \begin{document}
 
@@ -80,20 +83,19 @@
 
 % \phantomsection
 % \addcontentsline{toc}{chapter}{Contents}
+\begingroup
+\let\onecolumn\twocolumn
 \tableofcontents
-\clearemptydoublepage
+\endgroup
 
-% \pagenumbering{roman}
-\setcounter{page}{1}
-
-% \setcounter{chapter}{0}
 \include{front_matter}
 \include{cv}
 % \include{ml}
 % \include{image_proc}
+% \include{deep_learning}
 % \include{geometry}
 % \include{math}
-% \include{deep_learning}
+% \include{cpp}
 
 % \appendix
 

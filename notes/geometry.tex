@@ -1,7 +1,7 @@
 %!TEX root = cv_ml_notes.tex
-\section{Geometry Processing} 
+\chapter{Geometry Processing} 
 
-\subsection{Basics}
+\section{Basics}
 
 Plane normal equation
 
@@ -9,7 +9,7 @@ Plane point distances
 
 Barycentric coordinates
 
-\subsection{ Surface Representations}
+\section{Surface Representations}
 
 Explicit:
 \begin{itemize}
@@ -17,6 +17,7 @@ Explicit:
 \item Spline surface
 \item Oriented planes
 \item Point cloud
+\item Bezier curves
 \end{itemize}
 
 Implicit - voxel grid:
@@ -40,7 +41,7 @@ Volumetric modeling for vision:
 
 Drawbacks: Implicit surface representation
 
-\subsection{Marching Cubes}
+\section{Marching Cubes}
 \begin{itemize}
 \item Recovers an isosurface from a volume
 \item ensures a watertight surface
@@ -60,13 +61,13 @@ Limitations of Marching Cubes
 \item  Problems with very thin surfaces if resolution not high enough
 \end{itemize}
 
-\subsection{ICP}
+\section{ICP}
 
 Point to point
 
 Point to plane
 
-\subsection{Point Cloud Merge}
+\section{Point Cloud Merge}
 
 \begin{enumerate}
 \item ICP for point cloud matching
@@ -74,9 +75,5 @@ Point to plane
 \item Outlier detection / removal 
 \item Surface / mesh fitting / template fitting
 \end{enumerate}
-
-\subsection{Geometric Representations}
-
-Bezier curves
 
 \subsection{Laplacian Deformation}
