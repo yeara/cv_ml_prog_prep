@@ -16,7 +16,7 @@ Symmetry group: SO3 vs. SE3
 
 Reflection: Eigenvalues of the rotation matrix contain (-1)
 
-\paragraph{2D Translation} - only possible in homogeneous coordinates
+\textbf{2D Translation} - only possible in homogeneous coordinates
 
 \section{Projective Geometry}
 
@@ -109,10 +109,11 @@ $\left( \begin{matrix} x_1^T \\ x_2^T \\ x_3^t \end{matrix} \right) \pi = 0 $
 
 The camera model relates pixels and rays in space
 
-Optical axis - usually denoted as $z$, faces into the world.
+\textbf{Optical Axis} - usually denoted as $z$, faces into the world.
+
 The optical axis passes between the camera origin and the principal point in the image.
 
-Principal point - the point at which the principal axis passes through the image plane.
+\textbf{Principal Point} - the point at which the principal axis passes through the image plane.
 
 Image plane - can be visualized in front of the sensor, the formulation is equivalent.
 
@@ -122,9 +123,8 @@ The camera matrix projects from the world space to image space. Using homogeneou
 
 The actual image plane is actually only a few mm wide.
 
-Central Projection Model
-
 \subsection{Camera Intrinsic $K$}
+
 $K = \left( \begin{matrix} 
 \alpha_x & \gamma & u_0 & 0 \\
 0 & \alpha_y  & v_0 & 0 \\
@@ -142,8 +142,7 @@ The camera model has five intrinsic parameters:
 \item  $\alpha_y = f m_y $
 \end{itemize}
 
-This model cannot represent lens distortion. Usually the model is simplified to:
-
+The model cannot represent lens distortion. Often simplified to:
 $ K = \left( \begin{matrix} 
 f & 0 & h/2 & 0 \\
 0 & f  & w/2 & 0 \\
@@ -166,7 +165,7 @@ The actual camera position in world coordinates is $C = -R^{-1}T=-R^{T}T $
 
 \subsection{Camera Intrinsic Estimation}
 
-For capturing a planar object:
+Capturing a known planar object:
 
 \begin{enumerate}
 \item Set the planar object as the infinity plane: $x = ( \begin{matrix} x_1 & x_2 & 0 & 1 \end{matrix})^T$
@@ -183,11 +182,14 @@ To perform the last step:
 (ii) Geometric minimization of symmetric transfer error: 
 
 Minimize using Levenberg-Marquardt over 9 entries of $h$ or reprojection error:
+
 - compute initial estimate for optimal $x_i$
+
 - minimize cost over ${H,x1,x2,...,xn}$
+
 - if many points, use sparse method
 
-\subsubsection{Other Considerations}
+\subsection{Other Considerations}
 \begin{itemize}
 \item Radial lens distortion
 \item Rolling shutter effects
@@ -204,19 +206,19 @@ A \textbf{descriptor} is a compact representation of the image region around tha
 
 \subsection{Invariant Descriptors \& Matching}
 
-Feature matching: extract features independently and match by comparing descriptors.
+\textbf{Feature matching}: extract features independently and match by comparing descriptors.
 
-Feature tracking: extract at first frame, find same feature in the next frame
+\textbf{Feature tracking}: extract at first frame, find same feature in the next frame
 
 Image features may go through the following transformations:
 
-Geometric transformations:
+\textbf{Geometric transformations}
 \begin{itemize}
 \item Translation, rotation, scaling
 \item Perspective foreshortening 
 \end{itemize}
 
-Photometric transformations:
+\textbf{Photometric transformations}
 \begin{itemize}
 \item Non-diffuse reflections 
 \item Illumination
@@ -224,7 +226,7 @@ Photometric transformations:
 
 Good descriptors and detectors are invariant to these transformations. 
 
-\textbf{Desirable Properties}
+\textbf{Desirable Feature Properties}
 \begin{itemize} 
 \item Precise (sub pixel) localization
 \item Repeatable detections under rotation, translation, illumination, perspective distortion.
@@ -241,8 +243,7 @@ Feature Points - distinct points in image (i.e. corners)
 
 Stable image features should maximize the uniqueness of the region, which is measured by auto-correlation.
 
-$$ 
-\mathbf{A} = \left(  \begin{matrix} I_x^2 &  I_xI_y \\
+$$ \mathbf{A} = \left(  \begin{matrix} I_x^2 &  I_xI_y \\
 I_xI_y & I_y^2
 \end{matrix} \right) $$
 
@@ -255,7 +256,7 @@ I_xI_y & I_y^2
 
 Choosing local maxima as keypoints. 
 
-Subpixel accuracy by fitting quadratic 
+Subpixel accuracy by quadratic fit.
 
 Variant to affine and scale transformation.
 
@@ -263,12 +264,15 @@ Variant to affine and scale transformation.
 
 SIFT - Scale invariant image transform.
 
-Difference of Gaussians generates candidates. 
-Consider local extrema in scale and spatial space.
-Invariant to translation, rotation and scale.
-Quad fit for sub-pix accuracy.
+- Difference of Gaussians generates candidates. 
 
-Orientation Assignment
+- Consider local extrema in scale and spatial space.
+
+- Invariant to translation, rotation and scale.
+
+- Quad fit for sub-pix accuracy.
+
+\textbf{Orientation Assignment}
 \begin{itemize}
 \item  Compute gradient for each pixel in patch at selected scale
 \item  Bin gradients in histogram \& smooth histogram
@@ -297,14 +301,13 @@ Gradient direction more important than positions
 
 Partition into sectors to retain spatial information
 
-Thresholded image gradients are sampled over 16x16 array of locations in scale space
+Thresholded image gradients are sampled over $16\times16$ array of locations in scale space
 
 Create array of orientation histograms
 
-8 orientations x 4x4 histogram array = 128D
+8 orientations x $4\times4$ histogram array = 128 dimensions.
 
 Descriptor size was chosen based on careful parameter tuning. 
-
 
 \textbf{Hard vs. Soft Binning}
 
@@ -328,7 +331,6 @@ Only translation invariant.
 
 $MSD=\frac{1}{2xy} \sum_{i,y}\left|P_{x,y}^{(i)} - P^{(j)}_{x,y}\right|^2$
 
-
 \subsubsection{Zero-Mean Normalized Cross Correlation}
 Consider two real valued functions  $f,g$  differing only by an unknown shift along the x-axis (i.e. disparity). One can use the cross-correlation to find how much $g$ must be shifted along the x-axis to make it identical to $f$ 
 
@@ -339,8 +341,7 @@ The formula essentially slides the $g$ function along the x-axis, calculating th
 $$ NCC = \frac{N(I^\prime,I)}{\sqrt{N(I,I)N(I^\prime,I^\prime)}} $$
 $$ N(I^\prime,I) = \sum_{xy} (I(x,y) - \bar I )(I^\prime(x,y) - \bar I^\prime ) $$
 
-This works for uniform illum. changes
-But even this is still fragile (i.e. non uniform changes)
+This works for uniform illumination changes. But even this is still fragile (i.e. non uniform changes)
 
 \subsection{Binary Descriptors}
 
@@ -383,8 +384,6 @@ Descriptor Space:
 \item Huge memory demands
 \end{itemize}
 
-
-
 \subsection{Feature Tracking}
 
 Identify features and track them over video
@@ -411,11 +410,12 @@ Assumption: neighbors have same displacement
 \subsubsection{Summary}
 Motivation: Exploit small motion between subsequent (video) frames
 
-Key ideas:
-- Brightness constancy assumption
-- Linearize complex motion model and solve iteratively
-- Use simple model (translation) for frame-to- frame tracking
-- Compute affine transformation to first occurrence to avoid switching tracks
+\begin{itemize}
+\item  Brightness constancy assumption
+\item  Linearize complex motion model and solve iteratively
+\item  Use simple model (translation) for frame-to- frame tracking
+\item  Compute affine transformation to first occurrence to avoid switching tracks
+\end{itemize}
 
 
 \section{Stereo Vision}
@@ -455,36 +455,27 @@ The essential matrix can only be used in relation to calibrated cameras, it requ
 
 The essential matrix can be useful for determining both the relative position and orientation between the cameras and the 3D position of corresponding image points.
 
- E is an essential matrix iff two of its singular values are equal, third is 0.
+$\mathbf{E}$ is an essential matrix iff two of its singular values are equal, third is 0.
 
-$\mathbf{E}=\mathbf{RS}$
+$\mathbf{E}=\mathbf{RS}$ where $\mathbf{S} = \left( \begin{matrix} 0 & -T_z & T_y \\ T_z & 0 & -T_x \\ -T_y & T_x & 0  \end{matrix} \right)$
 
-where 
-
-$\mathbf{S} = \left( \begin{matrix} 0 & -T_z & T_y \\ T_z & 0 & -T_x \\ -T_y & T_x & 0  \end{matrix} \right)$
-
-weird transformation matrix with 3 DoF and R also has 3 DoFs
-
-rank 2 
+Transformation matrix with 3 DoF and R also has 3 DoFs, rank 2.
 
 Has both left and right nullspaces.
 
-Depends only on extrinsic parameters
+Depends only on extrinsic parameters.
 
-\subsection{ Fundamental matrix}
+\subsection{Fundamental matrix}
 
 $\mathbf F \in \mathbb{R}^{3\times3} = \mathbf{M}_r\mathbf{RSM}_l^{-1}$ 
 
-The Fundamental matrix relates corresponding points in stereo images.
-$\mathbf{X}^{\prime T}\mathbf{Fx}=0$ and $\mathbf{F}_{3x3}$
+The Fundamental matrix relates corresponding points in stereo images. $\mathbf{X}^{\prime T}\mathbf{Fx}=0$ and $\mathbf{F}_{3x3}$
 
 Analogous to essential matrix. The fundamental matrix relates pixels (points) in each image to epipolar lines in the other image.
 
 It is related to the essential matrix $\mathbf{E} = \mathbf{K}^{\prime T} \mathbf{FK}$ where $\mathbf{K}^{\prime}, \mathbf{K}$ are in the intrinsic matrices of both cameras.
 
 $rank(\mathbf{F}) = 2$
-
-\textbf{Here a bunch notes were deleted.}
 
 \subsection{Eight Point Algorithm}
 
@@ -499,7 +490,7 @@ Otherwise this is solved in the least square sense and one computes a $F^\prime$
 Since the whole algorithm is numerically sensitive, all points and matches need to be normalized. 
 
 \subsection{Singularity Constraint - Seven Point Algorithm}
-From 7x9 matrix, compute eigenvalues.
+From $7\times9$ matrix, compute eigenvalues.
 Solve up to $F = \alpha F_1 + (1-\alpha) F_2$
 Enforce a constraint by: $\det(F) = 0$ (cubic in $\lambda$)
 cubic in $\alpha$ => 1 or 3 solutions.
@@ -610,15 +601,10 @@ Pros: More efficient, more accurate
 
 Con: Less robust
 
-
-
-
-SFM might be employed on a huge set of potential images. It's a challenge to retrieve near-by images, and add images one by one to a growing graph while accounting for potential outlier images so that robust reconstruction maybe performed. 
-
 \section{Dense Correspondences and Stereo Matching}
 
 \subsection{Triangulation}
-
+Szeliski's book has a nice explanation, with a good visualization of the optimization.
 
 \subsection{Disparity}
 Definition: difference in image location of the same 3D point between stereo images
@@ -660,7 +646,6 @@ Depth resolution is better when the camera is closer to the objects.
 
 The disparity between two points in a stereo pair is inversely proportional to their distance from the observer.
 
-
 \subsection{Multiple View Geometry - Single Center of Projection}
 
 Three camera views are related via a trifocal tensor 
@@ -682,13 +667,13 @@ Rectification can be done for image pairs, but may prove impossible for a collec
 
 How to compute rectification?
 
-1. Rotate both cameras s.t. they're perpendicular to the line connecting both camera centers - using the smallest rotation possible and relying on the freedom of tilt. 
-2. To determine the desired twist around the optical axes, make the up vector perpendicular to the camera center line -> the corresponding epipolar lines are horizontal and the disparity for points at infinity is 0. 
-3. Rescale images if necc.
+\begin{enumerate}
+\item Rotate both cameras s.t. they're perpendicular to the line connecting both camera centers - using the smallest rotation possible and relying on the freedom of tilt. 
+\item To determine the desired twist around the optical axes, make the up vector perpendicular to the camera center line -> the corresponding epipolar lines are horizontal and the disparity for points at infinity is 0. 
+\item Rescale images if necessary.
+\end{enumerate}
 
-Then the pixel matching can be done for a single dimension on every scanline - reduces the dimensionality of the problem to 1D search
-
-\subsubsection{How does it look in math?}
+Then the pixel matching can be done for a single dimension on every scanline - reduces the dimensionality of the problem to 1D search. 
 
 Assuming one camera is $K = [ I 0]$
 
@@ -696,10 +681,11 @@ Assuming one camera is $K = [ I 0]$
 
 \subsection{Assumptions for Stereo Matching}
 
-- Small baseline
-  - Lower precision and higher correspondences  / similar appearance
-- Most scene points are visible in both images
-- Image regions are similar in appearance
+\begin{itemize}
+\item Small baseline: lower precision and higher correspondences  / similar appearance
+\item Most scene points are visible in both images
+\item Image regions are similar in appearance (planar)
+\end{itemize}
 
 Left view images will move to the left in the right image - optimization by maximizing normalized cross-correlation.
 
@@ -709,6 +695,8 @@ In an image pair each pixel has at most one corresponding pixel, if occlusion no
 Block matching has an assumption about frontal view.
 
 \subsection{Graph Cut}
+
+\yeara{TODO}
 
 \textbf{Treats Stereo Matching as Energy Minimization}
 
@@ -721,7 +709,6 @@ Don’t use visibility or ordering constraints
 Add costs of all paths
 
 \textbf{Patch Match Stereo}
-
 
 \section{Stereo Reconstruction Pipeline}
 
@@ -757,9 +744,11 @@ It's advantages: tolerant to missing data (sum), while providing a true ML estim
 Allows assignment of individual covariances to each measurement
 may also be extended to include estimates of priors and constraints on camera parameters or point positions
 
-Cons:
-requires a good initialization 
-can become an extremely large minimization problem (solution: use last N (key)frames)
+\textbf{Cons}
+\begin{itemize}
+\item Requires a good initialization 
+\item Can become an extremely large minimization problem (solution: use last N (key)frames)
+\end{itemize}
 
 Iterative minimization:
 
@@ -938,25 +927,24 @@ Recognizing features/structures that are already seen. This is used to correct c
 \end{enumerate}
 
 \subsubsection{Sparse Volumetric Representation}
+\yeara{TODO}
 
 \section{Object Detection}
-
 Before deep learning, was a several step process: 
-
 \begin{enumerate}
-\item edge detection and feature extraction using techniques like SIFT, HOG 
-\item Build multi-scale object representation
-\item Descriptor were then compared with existing object templates to detect objects
+\item Edge detection and feature extraction using techniques like SIFT, HOG.
+\item Build multi-scale object representation.
+\item Descriptor were then compared with existing object templates to detect objects.
 \item Localize objects present in the image.
 \end{enumerate}
-
 For example, for pedestrian detection: SVM template + image pyramid -> template matching
 
 \subsubsection{Quality Metrics}
 
 Intersection over Union (IoU) :Bounding box prediction cannot be expected to be precise on the pixel level, and thus a metric needs to be defined for the extend of overlap between 2 bounding boxes.
 
-Average Precision and Average Recall : Precision meditates how accurate are our predictions while recall accounts for whether we are able to detect all objects present in the image or not. Average Precision (AP) and Average Recall (AR) are two common metrics used for object detection.
+Average Precision and Average Recall: Precision meditates how accurate are our predictions while recall accounts for whether we are able to detect all objects present in the image or not. Average Precision (AP) and Average Recall (AR) are two common metrics used for object detection.
+
 
 \subsection{Face Detection}
 
@@ -964,7 +952,7 @@ Haar Cascades
 
 Face Landmark Detection ($\sim 60$)
 
-3DDM Face model (identity, expression,
+3DDM Face model (identity, expression, gender)
 
 Basel Face Model (BFM)
 
@@ -977,5 +965,3 @@ Another conclusion from this interview question:
 Think about the function representation of the feature how the image and how it can be detected quickly. For example - as row traversal operations.
 
 This rough estimate can be refined later.
-
-

@@ -1,6 +1,8 @@
 %!TEX root = cv_ml_notes.tex
 % \refstepcounter{chapter}
-\section{Machine Learning}
+\chapter{Machine Learning}
+
+These notes are based on the Andrew Ng's Coursera course. After finishing supervised learning I switched to the lecture notes from Standford Machine Learning course, which are much more thorough. 
 
 \section{Resources}
 \begin{itemize}
@@ -8,6 +10,7 @@
 \item https://ml2.inf.ethz.ch/courses/aml/
 \item https://las.inf.ethz.ch/pai-f19
 \item https://www.coursera.org/learn/machine-learning/lecture/zcAuT/welcome-to-machine-learning
+\item https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/pdfs/37%20MaximumAPosteriori.pdf
 \end{itemize}
 
 Regression: predict real-valued output
@@ -162,11 +165,9 @@ And we solve for a model:
 
 $\theta = (X^T X)^{-1} X^T y$
 
-
-
 Now, this is true only if $X^T X$ is invertible
 
-Feature scaling is not necc. when using the normal equation.
+Feature scaling is not necessary when using the normal equation.
 
 \subsection{GD vs. Normal Equation}
 
@@ -179,7 +180,7 @@ GD
 
 Normal Equation 
 \begin{itemize}
-\item slow for large $n$  $O(n^3)$, n=10k is where switching over could be beneficial
+\item slow for large $n$  $O(n^3)$, $n=10k$ is where switching over could be beneficial
 \item no need to choose learning rate
 \item direct
 \end{itemize}
@@ -309,7 +310,7 @@ Assuming $e^{i}\sim\mathcal{N}(0,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(
 
 That implies that: $p(y^{(i)}|x^{(i)};\theta)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(y^{i}- \theta^Tx^{(i)})^2}{2\sigma^2}\right)$ - this does not depend on $\theta$, the model is not a random variable! 
 
-For the entire model's training set $X$  we can define this the **likelihood** function of the model : $L(\theta)=L(\theta;X;\vec{y})=p(\vec{y}|X;\theta)$
+For the entire model's training set $X$  we can define this the likelihood function of the model : $L(\theta)=L(\theta;X;\vec{y})=p(\vec{y}|X;\theta)$
 
 $L(\theta) = L(\theta;X,\vec y) = p(\vec y| X;\theta)$
 
@@ -325,7 +326,7 @@ Note that this does not depend on $\sigma$ !
 
 \subsubsection{Maximum A Posteriori}
 
-/TODO
+\yeara{TODO}
 
 \subsection{Locally Weighted Linear Models}
 
@@ -362,7 +363,7 @@ For each class, train a logistic regression classifier $h_{\theta}^{(i)}(x)$ tha
 
 For new input choose $\max_ih_\theta^i(x)$
 
-\section{ Overfitting vs. Bias}
+\section{Bias vs. Variance}
 
 \includegraphics[width=0.5\columnwidth]{ml_figures/overfitting.png}
 Underfitting -> high bias.
@@ -373,6 +374,40 @@ High variance - fitting a high order polynomial can be used to fit almost any fu
 
 If we have too many features, the learned hypothesis may fit the training data very well, but fail to generalize
 
+\subsection{Model Selection and Train/Validation/Test Sets}
+Just because a learning algorithm fits a training set well, that does not mean it is a good hypothesis. It could over fit and as a result your predictions on the test set would be poor. The error of your hypothesis as measured on the data set with which you trained the parameters will be lower than the error on any other data set.
+
+Given many models with different polynomial degrees, we can use a systematic approach to identify the 'best' function. In order to choose the model of your hypothesis, you can test each degree of polynomial and look at the error result.
+
+One way to break down our dataset into the three sets is:
+
+Training set: 60%
+Cross validation set: 20%
+Test set: 20%
+We can now calculate three separate error values for the three different sets using the following method:
+
+Optimize the parameters in $\theta$ using the training set for each polynomial degree.
+Find the polynomial degree d with the least error using the cross validation set.
+Estimate the generalization error using the test set with $J_{test}(\theta(d))$, ($d = \theta$ from polynomial with lower error). 
+This way, the degree of the polynomial d has not been trained using the test set.
+
+\subsection{Regularization}
+
+Penalizing the $\theta$ too much leads to high bias in the model, i.e. strong underfitting. 
+
+When adding regularization, the error should be computed without the regularization term - i.e. now the error function and the cost function are different.
+
+
+How to choose regularization weight:
+\begin{itemize}
+\item Create a list of lambdas (i.e. $\lambda \in {0,0.01,0.1, 1, 10, 100}$);
+\item Create a set of models with different degrees or any other variants.
+\item Iterate through the $\lambda$s and for each $\lambda$ go through all the models to learn some $\theta$.
+\item Compute the cross validation error using the learned $\theta$ (computed with $\lambda$) on the J_{CV}(\theta) without regularization.
+\item Select the best combo that produces the lowest error on the cross validation set.
+\item Using the best combo $\theta,\lambda$ apply it to the test set to see if it generalizes.
+\end{itemize}
+
 \subsubsection{Addressing Overfitting}
 
 Reduce number of features
@@ -382,8 +417,10 @@ Model selection algorithms
 
 Regularization
 
+\begin{itemize}
 \item keep features but reduce magnitude / values of $\theta_j$ 
 \item works well when there are a lot features, each of which contributes less
+\end{itemize}
 
 Modify the cost function by penalizing the parameters:
 
@@ -395,7 +432,68 @@ So now the objective has a data term and a regularization term.
 
 The regularization term: $\lambda\sum_{j=1} \theta_j^2 $ keeps all of them small
 
-If $\lambda $ is very large, in linear reg., all model params will be close to 0 and $h_\theta(x) = \theta_0$  
+If $\lambda $ is very large, in linear reg., all model parameters will be close to 0 and $h_\theta(x) = \theta_0$ 
+
+\subsection{Polynomial Degree and Bias vs. Overfitting}
+
+The relationship between the degree of the polynomial $d$ and the underfitting or overfitting of our hypothesis.
+
+We need to distinguish whether bias or variance is the problem contributing to bad predictions. 
+High bias is underfitting and high variance is overfitting. Ideally, we need to find a golden mean between these two.
+The \emph{training} error will tend to decrease as we increase the degree $d$ of the polynomial.
+
+At the same time, the \emph{cross validation error} will tend to decrease as we increase d up to a point, and then it will increase as d is increased, forming a convex curve.
+
+High bias (underfitting): both $J_{train}(\theta)$ and $J_{CV}(\theta)$ will be high. Also, $J_{CV}(\theta)\approx J_{train}(\theta)$.
+
+High variance (overfitting): $J_{train}(\theta)$ will be low and $J_{CV}(\theta)$ will be much greater than $J_{train}(\theta)$.
+
+\includegraphics[width=0.9\columnwidth]{ml_figures/bias_variance.png}
+
+\subsection{Learning Curve}
+
+With a smaller number of training examples, the error cost on the training set or cross validation set should remain relatively low. As the number of training examples grows, the error will increase (but approximately asymptotically), as it become harder to fit all examples perfectly. At the same time, the cross-validation error should decrease.
+
+\includegraphics[width=0.9\columnwidth]{ml_figures/learning_curve.png}
+
+\subsubsection{High Bias Case}
+
+In this case the model does not have enough degrees of freedom to fit the data. Adding more data points will not help the performance of the model. 
+
+One will observe that the cross validation error will decrease initially, and then stagnate. 
+The training error will increase until it comes close to the cross-validation error.
+Both of these errors will be high.
+
+\includegraphics[width=0.9\columnwidth]{ml_figures/learning_curve_bias.png} 
+
+\subsubsection{High Variance Case}
+
+The training error will remain low, although increase slightly as it becomes harder and harder to fit more training examples.
+
+The cross validation error will remain high, maybe will decrease.
+
+We will observe a large gap between the training error and the cross validation error. In the high variance case, adding more training examples can help.
+
+\subsection{Evaluating a Hypothesis}
+
+Regression error = (normalized) $(h_\theta(x^(i)) - y^{(i)})^2$
+
+Misclassification error = (normalized) $\sum err (h_\theta(x^{(i)}), y^{(i)})$
+
+Trouble shooting options:
+
+Getting more training examples $\rightarrow$ fixes high variance.
+Trying smaller sets of features $\rightarrow$ fixes high variance.
+Trying additional features - solution for high bias
+Trying polynomial features - solution for high bias
+Increasing $\lambda$ - quick and easy - fixes high bias
+decreasing $\lambda$ - fixes high variance
+
+\subsubsection{Neural Networks and Overfitting}
+
+Smaller networks - fewer parameters, more prone to underfitting - computationally cheaper
+Larger networks - more parameters, prone to overfitting - expensive, use regularization. 
+Usually larger network + regularization results in better performance.
 
 
 \section{Measuring Model Performance}
@@ -409,13 +507,13 @@ Precision-Recall curves summarize the trade-off between the true positive rate a
 
 Precision-recall curves are appropriate for imbalanced datasets.
 
-\subsubsection{ ROC -  Receiver Operating Characteristic curve
+\subsubsection{ROC -  Receiver Operating Characteristic curve}
 
 Summarize the trade-off between the true positive rate and false positive rate for a predictive model using different probability thresholds.
 
 ROC curves are appropriate when the observations are balanced between each class
 
-**Convolution** is a [mathematical operation](https://en.wikipedia.org/wiki/Operation_(mathematics)) on two [functions](https://en.wikipedia.org/wiki/Function_(mathematics)) (*f* and *g*) that produces a third function expressing how the shape of one is modified by the other
+Convolution is a mathematical operation on two functions that produces a third function expressing how the shape of one is modified by the other.
 
 $(f\star g)(t) = \int_{-\infty}^{\infty} f(\tau)\cdot g(t-\tau)d\tau = \int_{-\infty}^{\infty} f(t-\tau)\cdot g(\tau)d\tau $
 
@@ -433,12 +531,8 @@ L1 favors sparse coefficients.
 
 \section{Support Vector Machines}
 
-https://medium.com/machine-learning-101/chapter-2-svm-support-vector-machine-theory-f0812effc72\section{targetText=A Support Vector Machine (SVM,hyperplane which categorizes new examples.))
-
-
-
 \section{Decision Trees}
-Recursive repartition of the data
+Recursive repartition of the data. 
 
 \subsection{Random Forest Regression}
 
@@ -455,17 +549,13 @@ Averaging the product of the trees reduces overfitting to noise
 \subsection{Random Fern Regressors}
 
 
-
 \section{Boosting}
+
 Learning strong classifiers from weak classifiers.
-
-
-
-
 
 \section{Naive Bayes Classifier}
 
-/TODO
+\yeara{TODO}
 
 \section{RANSAC}
 
@@ -475,9 +565,9 @@ Partition the method
 
 Is not determinant, depends on the subset selection, and is not guaranteed to converge.
 
-1. Select a random subset of the original data. Call this subset the *hypothetical inliers*.
+1. Select a random subset of the original data. Call this subset the hypothetical inliers.
 2. A model is fitted to the set of hypothetical inliers.
-3. All other data are then tested against the fitted model. Those points that fit the estimated model well, according to some model-specific [loss function](https://en.wikipedia.org/wiki/Loss_function), are considered as part of the *consensus set*.
+3. All other data are then tested against the fitted model. Those points that fit the estimated model well, according to some model-specific loss function, are considered as part of the consensus set.
 4. The estimated model is reasonably good if sufficiently many points have been classified as part of the consensus set.
 5. Afterwards, the model may be improved by reestimating it using all members of the consensus set.
 
@@ -531,7 +621,7 @@ Collaborative filtering
 
 \subsection{PCA}
 
-\chapter{Unsupervised Learning}
+\section{Unsupervised Learning}
 
 Algorithms for finding structure in data.
 
@@ -541,17 +631,17 @@ The clustering problem: given an unlabeled data set, group the data into coheren
 
 \subsection{K Means}
 
+\begin{itemize}
 \item $K$ number of clusters + initialization
 \item Training set ${x^{(1)},x^{(2)}\dots,x^{(m)}}$
 \item $x\in\mathbb{R}^n$
 \item By convention, drop $x_0=1$
+\end{itemize}
 
-```
 Randomly initialize K cluster centers
 While not converged:
 1. iterate over data and assign a cluster for each data point based on distance to center
 2. re-compute the cluster mean
-```
 
 If a cluster becomes empty - remove the cluster
 
@@ -601,7 +691,8 @@ For large $K$s it is not as effective.
 
 Choosing the right K 
 
-Plot the cost function with respect to the number of clusters.![elbow](/Users/kozlovy/Documents/2019_JobApplications/Notes/ml_figures/elbow.png)
+Plot the cost function with respect to the number of clusters:
+\includegraphics[width=0.9\columnwidth]{ml_figures/elbow.png}
 
 In practice it is usually a bit harder, and it is not clear that there is such a transition where the distortion stops.
 
@@ -615,7 +706,7 @@ Before PCA it is standard practice to perform mean normalization and feature sca
 
 \subsubsection{PCA vs Linear Regression}
 
-<img src="/Users/kozlovy/Documents/2019_JobApplications/Notes/ml_figures/PCA_Linear.png" alt="PCA_Linear" style="zoom:50%;" />
+\includegraphics[width=0.9\columnwidth]{ml_figures/PCA_Linear.png}
 
 We do not treat $y$ as a special variable
 
