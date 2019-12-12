@@ -1,0 +1,64 @@
+\documentclass[10pt,landscape,twocolumn]{article}
+
+\usepackage{algorithm}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[ngerman,english]{babel}
+\usepackage{caption} 
+\usepackage{enumitem}
+\usepackage[cm]{fullpage}
+\usepackage[pdftex]{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[slantedGreek]{mathpazo}
+\usepackage{named}
+\usepackage{pdfpages}
+\usepackage{titlesec} % for compact chapter titles
+\usepackage{url}
+% \usepackage{appendix}
+% \usepackage{color}
+% \usepackage{colortbl} % for colored hlines in chapter pagestyle
+% \usepackage{scrpage2}
+% \usepackage{booktabs} % publication quality tables for LaTeX
+% \usepackage{scrhack} % removes warning from KOMA
+% \usepackage{helvet} % sets sans-serif font
+% \usepackage{algpseudocode}
+% \usepackage{csquotes}
+
+% pdf hyperlinks
+\usepackage[pdftex,
+		bookmarks,
+		bookmarksopen=true,
+		bookmarksnumbered=true,
+		pdfauthor={Yeara Kozlov},
+		pdftitle={},
+		colorlinks,
+		linkcolor=black,
+		citecolor=black,
+		filecolor=black,
+		urlcolor=black,
+		anchorcolor=black,
+		menucolor=black,
+		breaklinks=true,
+		pageanchor=true,
+		plainpages=false,
+		pdfpagelabels=true]{hyperref}
+
+
+%% Manually set formatting options
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+
+\setlist[itemize]{itemsep=0.7pt plus 0.01pt minus 0.01pt}
+\makeatother
+
+\setlength{\parindent}{0pt}
+% \setlength{\parskip}{0pt plus 0.5ex}
+\setlength{\parskip}{0.105cm}
+
+\setcounter{secnumdepth}{2}
+
+% \titleformat{\chapter}
+% {\normalfont\Large\bfseries}{\thechapter.}{1em}{}
+
+\input{macros}
+
+% \input{cv_notebook/doc}
+\input{dl_notebook/doc}

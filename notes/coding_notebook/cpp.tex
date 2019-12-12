@@ -1,0 +1,96 @@
+%!TEX root = cv_ml_notes.tex
+% \refstepcounter{chapter}
+\section{C++}
+
+\subsection{Object Oriented Programming}
+
+\textbf{Abstraction} - class should not expose its data members. Can change internal representation without affecting the rest of the codebase.
+
+\textbf{Inheritance} - private, protected, public
+
+\textbf{Polymorphism} - virtual function, virtual function table, virtual destructors, covariant return types.
+\textbf{}
+
+\textbf{Subsumption property} - an object of the base class can be substituted by an object that derives from it (directly or indirectly).
+
+\textbf{local class} - a class defined within the scope of a different class.
+
+\textbf{this} - pointer to current instant of object, passed implicitly. 
+
+\textbf{Overloading}
+
+\textbf{The rule of 3,5}
+
+\textbf{Constructors} - special member function that is called whenever a new instance of a class is created. The compiler calls the constructor after the new object has been allocated in memory, and converts that "raw" memory into a proper, typed object. 
+
+Default Constructors - called by the compiler by default, has no arguments.
+
+\subsection{static}
+
+% static objects - 
+
+static data members -  will cause that member to be shared by all instances of the owner class and derived classes. To use static data members you must declare the data member as static and initialize it outside of the class declaration, at file scope. (i.e. it lives in the grand program context)
+
+static member functions - callable without an object. The function does not take an instantiation as an implicit this parameter, instead behaving like a free function. This means that static class functions can be called without creating instances of the class.
+
+\subsection{casting}
+
+implicit cast / C style cast - static cast, avoid.
+
+reinterpret\_cast -  used to cast between incompatible pointer types
+static\_cast - relies on compile time information, does not check for type safety
+dynamic\_cast - checks for type safety
+
+\subsection{auto}
+
+\subsection{Smart pointers}
+
+\textbf{unique\_ptr} - only a single copy can exist. follows RAI. releases memory in destructor.
+
+\textbf{shared\_ptr}
+
+\textbf{weak\_ptr}
+
+\subsection{RAII - Resource Acquisition Is Initialization}
+
+Ensure exception safety. 
+
+RAII makes it possible to avoid resource leaks without extensive use of
+
+\subsection{Templates}
+
+Instantiated at compile-time with the source code.
+
+Type safe.
+
+Allow user-defined specialization.
+
+Allow non-type parameters.
+
+Use “lazy structural constraints”.
+
+Support mix-ins.
+
+\subsection{const}
+
+\subsection{"exotic" keyword}
+
+\textbf{volatile}
+
+\textbf{mutable}
+
+\subsection{lambda functions}
+
+\subsection{Design Patterns}
+
+\subsection{Creational Patterns}
+\textbf{Factory}
+\textbf{Abstract Factory}
+
+\subsection{Structural Patterns} 
+
+\textbf{Adapter} - to adapt two classes which are incompatible (the example was HinduAdabpter inheirts from Hindu which calls a Muslim ritual.
+
+\textbf{Bridge} - separates interface from its implementation
+
+\subsection{Behavioral Patterns}
