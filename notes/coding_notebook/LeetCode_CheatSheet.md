@@ -1,25 +1,33 @@
-# CheatSheet
+# Coding Interview Cheat Sheet
 
-### Snake and Ladders Conversion:
+## C++ Containers
+type name[size]
+vector
+map<key,value>
+set<pair<key,value>>
 
-r = n - (li-1) / n - 1;
-c = (li-1) % n;
-if((n-r-1)%2) c = n - c - 1;
+## Container Adapters
+stack
+queue
+priority_queue
 
-### Power Set
+## Other Structures
+min-heap
+search tree
 
-Power set size is 2^n - iterate over all combinations using an int and choose elements using bit shifts tests.
+## Binary Operators
+Left shift: <<
+Right shift: >>
 
-Testing with bit shift: counter & 1 << j
+## Bit Sizes
+sizeof: return size of char
+char = 4 bits
+int = 32 bits
 
-A neat solution was growing the power set by iterating over previous sets until the correct cardinality for each pass (copy and mult)
+## Sets
+Power set size is 2^n - iterate over all combinations using an int and choose elements using bit shifts tests. Test generation with bit shift: counter & 1 << j
 
-### Permutation Set
+Combination set - n!
 
-Cardinality of permutation set - n!
+Binomial coefficient - n-choose-k = (n!)/(k!(n-k)!)
 
-### Unique Combination Sum
-
-Backtracking - test conditions and commit solution when entering the function
-
-Start the search window from the current index, or next, depending on the constraints

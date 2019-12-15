@@ -1,5 +1,8 @@
 # System Design
 
+## Design Patterns
+https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
+
 ## Resources
 
 https://github.com/donnemartin/system-design-primer

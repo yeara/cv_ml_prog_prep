@@ -14,14 +14,25 @@ https://orrsella.com/2016/05/14/preparing-for-a-facebook-google-software-enginee
 
 # A Systematic Approach to Leetcode
 
-- If there is anything related to counting the frequency of the words or characters then the best data structure would be to use a hash map
-- If there is anything related to finding some kind of sub-string then the first data structure that comes to my mind is to have two pointers and try a sliding window approach
-- If there is anything related to a sorted array then the first thing that comes to my mind is a binary search
-- If there is anything related to closing brackets and opening bracket or any problem having pair verification then we can use stacks
+## Go to Problem Solutions
+
+- Problems with counting the frequency of the words or characters, use a lookup table or a hash map.
+- Problems of finding a substring or subarray with specific properties: two pointers and a sliding window.
+- Sorted array: binary search
+- Pair verification problems: stack
 
 ##Dynamic Programming
 
-### Longest Common Substring
+The idea is to find some optimal substructure, and identify overlapping subproblems. 
+
+
+### Example Tabuation Problem - Longest Common Substring
+
+For this type of problems, it is common to maintain a scoring array and use it to build up the solution. 
+This technique avoids multiple lookups and function calls, less memory. 
+
+Examples: longest increasing subsequence, compute the end of the longest sequence ending at that index.
+
 
 ```
 Pseudo-code of LCS
@@ -30,87 +41,61 @@ for i in [0,M):
     for j in [0,N+1):
         if A[i]==A[j]:
             a[i+1][j+1]=a[i][j]+1
-            result = max(result,a[i+1][j+1])        else:
+            result = max(result,a[i+1][j+1])        
+        else:
             a[i+1][j+1] = 0
 ```
 
-We have to do exhaustive search, and this is the best way to memoize the search results.
+Perform exhaustive search, and memoize the search results in a "square" table.
+Fill in the table in a gradual manner.
 
-LCS = O(n*m)
+This gives a complexity of O(NM) vs. exhaustive search O((NM)^2)
 
-Exhaustive Search: O(n*m^2)
 
-### Optimal Substructure 
+### Memoization Recipe (Top Down)
+1. Check if the the table/memory look up contains the solution
+2. If it's a valid solution, return the value
+3. If it's a base case, update and return
+4. Else split up the problem into sub problems
+5. Make the recursive calls
+6. Compute and store the current value
+7. Return the value
 
-### Overlapping Subproblems
+Sometime avoid computing solutions to subproblems that are not needed, i.e. Common Subsequence. 
 
-### Memoization (top down)
+Can be more intuitive for matrix chain multiplications.
 
-check if the the table/memory look up contains the solution
-
-if it's a valid solution, return the value
-
-if it's a base case, update and return
-
-else split up the problem into sub problems
-
-make the recursive calls
-
-compute and store the current value
-
-return the value
-
-Sometime avoid computing solutions to subproblems that are not needed, i.e. Common Subsequence
-
-Can be more intuitive for matrix chain multiplicationa
-
-### Tabulation (bottom up)
-
-Avoids multiple lookups and function calls, less memory
-
-Example:
-
-For longest increasing subseqeunce 
-
-their idea was to compute the end of the longest sequence ending at that index, so you iterate over the  
-
-### Longest increasing subsequence
-
-They represent the matches as a table and compute the scores starting from 0,0
 
 ##Backtracking
 
-Here the idea is to exhaustively search all combinations. 
+The idea is to exhaustively search all combinations and discard any paths that do not lead to a solution.
 
-Important numbers: 2^n combination for true/false, choose/don't choose - true for sets with unique elements. 
+Important numbers: 2^n combination for true/false, choose/don't choose - true for sets of unique elements.
 
-Iterative solution can be modeled as a iteration over bit turn on / off
+Iterative solution can be modeled as a iteration over bit turn on / off: counter & 1 << j 
 
-counter & 1 << j 
+Backtracking can use a stack like structure to add an element, exhaustively search that space, and then remove the element. 
 
-and the backtracking can use a stack like structure to add an element, exhaustively search that space, and then remove the element
+### When Do We Switch from DP to Backtracking? 
 
-When Do We Switch from DP to Backtracking? 
+If we need to return all solutions -> backtracking
 
-if we need to return all solutions -> backtracking
-
-if we need to count all solution -> memoization + dp
+If we need to count all solution -> memoization + dp
 
 ## Sliding Window
 
 https://medium.com/leetcode-patterns/leetcode-pattern-2-sliding-windows-for-strings-e19af105316b
 
-Counters for words/char/digits
+The idea is to maintain counters for the goal, including the start and end of the current window. 
+Use a separate indicator for restrictions/search window criteria, such as number of distinct characters.
 
-Another counter for restrictions such as number of distinct etc characters
+Update the window indices as soon as a better solution is found, or current window fails criteria.
 
 ## DFS + BFS
 
-Using a stack imp for DFS
+DFS - Use a stack.
 
-Queue for level traverse (BFS)
-
-Stack for DFS
+BFS - Use a queue. 
 
 DFS - Exhaustive search, find all combinations/paths
 
@@ -120,11 +105,11 @@ Imp. tree level printing
 
 # Take Home Messages from Solutions
 
-Hashing - use a bit array and turning bits on and off
+Hashing - use a bit array and turning bits on and off.
 
 For small digit/chat count - use array counters
 
-For list traversal - assuming we know 
+For list traversal
 
 ### Longest Inc. Sequence
 
@@ -204,15 +189,13 @@ the distance between the start to the entry to the cycle is equal to the distanc
 
 ### Snakes and Ladders
 
-First, indexing is the worsest. 
+Getting indexing correctly is the worsest. 
 
-Second, stake home messages:
+Remember to return -1; 
 
-remember to return -1; 
+Remember to use early exit for Dijikstra
 
-remember to use early exit for Dijikstra
-
-That was the function for converting 
+Converting linear indices to tile numbers:
 
 r = n - (li-1) / n - 1;
 c = (li-1) % n;
@@ -226,18 +209,6 @@ Again, indexing and index tests are a bitch - esp the diagonals (check all diago
 
 Use the row as a way to keep track of what was already searched
 
-## Power Set
-
-The power set is a set of all possible subsets
-
-Power set size is 2^n
-
-Testing with bit shift: 
-
-j = 1 < n
-
-counter & 1 << j
-
 ### Count Digits
 
 The task was to count all of the 1's in all of the numbers between 0 and i. 
@@ -246,10 +217,31 @@ Here it was pretty simple in the sense that you compute your current power and r
 
 ### Coin Change
 
-First, sorting the coins ensures that we test against the largest coins first.
+Sorting the coins ensures that we test against the largest coins first.
 
-Here, to do the caching for the DP we use an array with the amount and store the min amount of coin for this value.
+DP - To do the caching, use an array with the amount [0-amount] and store the minimal amount of coins for this value.
 
-# TODOS
+
+## Misc / General
+
+### Power Set
+
+Power set size is 2^n - iterate over all combinations using an int and choose elements using bit shifts tests.
+
+Testing with bit shift: counter & 1 << j
+
+A neat solution was growing the power set by iterating over previous sets until the correct cardinality for each pass (copy and mult)
+
+### Permutation Set
+
+Cardinality of permutation set - n!
+
+### Unique Combination Sum
+
+Backtracking - test conditions and commit solution when entering the function
+
+Start the search window from the current index, or next, depending on the constraints
+
+# Interesting Problems
 
 https://algorithms.tutorialhorizon.com/colorful-numbers/
