@@ -24,19 +24,12 @@ O(2^(n))
 ## Problem Solving
 For each question:
 
-1. Pay attention
-   1. Record unique details for the problem (sorted arrays for example, positive numbers, etc)
-
+1. Pay attention - Record unique details for the problem (sorted arrays for example, positive numbers, etc)
 2. Ask for clarifications
-
 3. Create examples and debug them for special cases
-
    ​	Not too simple
-
    ​	Not too beautiful (i.e. not balanced trees)
-
 4. State the brute force solution and explain the drawbacks
-
 5. Optimize the solution - 
    	look for unused info 
    	manual solution
